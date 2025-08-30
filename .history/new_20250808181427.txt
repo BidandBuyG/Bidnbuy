@@ -1,0 +1,67 @@
+
+       
+        
+        "/" = home
+        "/account-type" = Account Type Selection
+
+        "/signup/customer" = Customer SignUp
+        "/login/customer" = Customer Login
+
+        "/signup/vendor" = Vendor Signup
+        "/login/vendor" = Vendor Login 
+
+        "/complete-profile" = Complete Profile KYC
+
+        "/customer-account-verify" = Customer Account Verification
+        
+        "/vendor-account-verify" = Vendor Account Verification 
+        
+        "/vendor-upload-product" = Vendor Upload ProductForm />}
+        />
+
+        {/* Escrow */}
+
+        /escrow" ={<Navigate to="/escrow/1" replace />} />
+        /escrow/:orderId" ={<EscrowStatus />} />
+        <Route
+          path="escrow/:orderId/received"
+          ={<EscrowItemReceived />}
+        />
+        <Route
+          path="escrow/:orderId/payment-released"
+          ={<EscrowPaymentReleased />}
+        />
+        <Route
+          path="escrow/:orderId/report-problem"
+          ={<EscrowReportProblemForm />}
+        />
+
+        {/* Bid Credit and Ledger */}
+
+        /bid-credit-top-up" ={<BidCreditTopUp />} />
+        /add-bid-credit" ={<AddBidCredit />} />
+        /bid-credit-top-up-success" ={<BidCreditTopUpSuccess />} />
+
+        /wallet-ledger" ={<WalletLedger />} />
+        /bid-credit-ledger" ={<BidCreditLedgerPage />} />
+      </Route>
+
+      <Route ={<LayoutWithHeaderFooter />}>
+        {/* Products */}
+        /product-home" ={<ProductHome />} />
+
+        /marketplace" ={<Marketplace />} />
+
+        /bids-and-auction" ={<BidsAndAuction />} />
+
+        <Route
+          path="auction-product-detail"
+          ={<AuctionProductDetail />}
+        />
+      </Route>
+    </Routes>
+  );
+};
+
+export default App;
+

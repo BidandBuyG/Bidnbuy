@@ -1,0 +1,38 @@
+{
+  "status": "success",
+  "nextCursor": "string",
+  "data": [
+    {
+      "_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "itemName": "string",
+      "slug": "string",
+      "category": "string",
+      "condition": "string",
+      "description": "string",
+      "files": [
+        "string"
+      ],
+      "basePrice": 0,
+      "discountPrice": 0,
+      "startingBidPrice": 0,
+      "buyItNowPrice": 0,
+      "reservePrice": 0,
+      "quantity": 0,
+      "deliveryType": "string",
+      "handlingTime": "string",
+      "length": "string",
+      "width": "string",
+      "height": "string",
+      "weight": "string",
+      "_vendor": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "isApproved": true,
+      "auctionPrice": 0,
+      "categories": "string",
+      "offers": [
+        "string"
+      ],
+      "createdAt": "2025-07-14T05:30:23.363Z",
+      "updatedAt": "2025-07-14T05:30:23.363Z"
+    }
+  ]
+}

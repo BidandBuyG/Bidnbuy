@@ -1,0 +1,25 @@
+/**
+ * SharePreview component displays a preview of how the referral message will look when shared.
+ * Only shown on desktop.
+ * @param {SharePreviewProps} props - The component props.
+ * @returns {JSX.Element} The rendered share preview section.
+ */
+
+import type { SharePreviewProps } from "../types/referrals";
+
+const SharePreview = ({ referralCode }: SharePreviewProps) => {
+  return (
+    <div className="hidden md:block">
+      <h2 className="text-white text-xl font-semibold mb-6">Share preview</h2>
+      <div className="p-4 rounded-lg border border-[#00707B] bg-[]" style={{ backgroundColor: "#013139" }}>
+        <p className="text-gray-300 text-base">
+          Use my referral code <span className="text-white font-semibold">{referralCode}</span> to get a discount on
+          your first purchase. Sign up now!
+        </p>
+      </div>
+    </div>
+  )
+}
+
+
+export default SharePreview;

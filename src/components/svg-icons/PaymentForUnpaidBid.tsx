@@ -1,0 +1,21 @@
+type Props = React.SVGProps<SVGSVGElement>;
+
+const PaymentForUnpaidBid = (props: Props) => {
+  return (
+    <svg
+      {...props}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 20V4H15.577L20 8.423V20H4ZM5 19H19V9H15V5H5V19ZM7.5 16H16.5V15H7.5V16ZM7.5 9H12V8H7.5V9ZM7.5 12.5H16.5V11.5H7.5V12.5Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
+
+export default PaymentForUnpaidBid;

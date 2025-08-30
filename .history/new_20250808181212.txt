@@ -1,0 +1,81 @@
+
+       
+        
+        "/" = home
+        "/account-type" = Account Type Selection
+
+        "/signup/customer" = Customer SignUp
+        "/login/customer" = Customer Login
+
+        "/signup/vendor" element= VendorSignup
+        "/login/vendor" element= VendorLogin 
+
+        <Route
+          path="complete-profile"
+          element={<CompleteProfile />}
+        />
+
+        <Route
+          path="customer-account-verify"
+          element={<CustomerAccountVerification />}
+        />
+        <Route
+          path="vendor-account-verify"
+          element={<VendorAccountVerification />}
+        />
+      </Route>
+
+      <Route element={<LayoutWithNavigationHeader />}>
+        {/* Vendor Upload */}
+
+        <Route
+          path="vendor-upload-product"
+          element={<VendorUploadProductForm />}
+        />
+
+        {/* Escrow */}
+
+        /escrow" element={<Navigate to="/escrow/1" replace />} />
+        /escrow/:orderId" element={<EscrowStatus />} />
+        <Route
+          path="escrow/:orderId/received"
+          element={<EscrowItemReceived />}
+        />
+        <Route
+          path="escrow/:orderId/payment-released"
+          element={<EscrowPaymentReleased />}
+        />
+        <Route
+          path="escrow/:orderId/report-problem"
+          element={<EscrowReportProblemForm />}
+        />
+
+        {/* Bid Credit and Ledger */}
+
+        /bid-credit-top-up" element={<BidCreditTopUp />} />
+        /add-bid-credit" element={<AddBidCredit />} />
+        /bid-credit-top-up-success" element={<BidCreditTopUpSuccess />} />
+
+        /wallet-ledger" element={<WalletLedger />} />
+        /bid-credit-ledger" element={<BidCreditLedgerPage />} />
+      </Route>
+
+      <Route element={<LayoutWithHeaderFooter />}>
+        {/* Products */}
+        /product-home" element={<ProductHome />} />
+
+        /marketplace" element={<Marketplace />} />
+
+        /bids-and-auction" element={<BidsAndAuction />} />
+
+        <Route
+          path="auction-product-detail"
+          element={<AuctionProductDetail />}
+        />
+      </Route>
+    </Routes>
+  );
+};
+
+export default App;
+
