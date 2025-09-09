@@ -4,6 +4,7 @@ import Referrals from "../features/marketing/pages/Referrals";
 import WalletOverview from "../features/wallet/pages/Overview";
 import WalletTransactions from "../features/wallet/pages/Transactions";
 import AdminConfig from "../features/admin/pages/Config";
+import Signup from "../features/auth/pages/Signup";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Routes>
         {/* Angela’s work */}
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/marketing/referrals" element={<Referrals />} />
 
         {/* Joshua’s work */}

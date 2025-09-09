@@ -1,6 +1,7 @@
-import type { Config } from "tailwindcss"
+import tailwindcssAnimate from "tailwindcss-animate";
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,7 +13,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Custom BidnBuy colors
         primary: {
           DEFAULT: "#0a3a3d",
           foreground: "#ffffff",
@@ -25,15 +25,12 @@ const config: Config = {
           DEFAULT: "#f59e0b",
           foreground: "#000000",
         },
-        // Main background colors used in the app
         "bidbuy-dark": "#01151C",
         "bidbuy-card": "#00222E",
         "bidbuy-teal": "#00707B",
         "bidbuy-search": "#095069",
         "bidbuy-button": "#004755",
         "bidbuy-footer": "#00545F",
-
-        // Default shadcn colors
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -53,14 +50,10 @@ const config: Config = {
           foreground: "hsl(var(--destructive-foreground))",
         },
         border: {
-          DEFAULT: "hsl(var(--border))"
+          DEFAULT: "hsl(var(--border))",
         },
-        input: { 
-          DEFAULT: "hsl(var(--input))" 
-        },
-        ring: { 
-          DEFAULT: "hsl(var(--ring))" 
-        },
+        input: { DEFAULT: "hsl(var(--input))" },
+        ring: { DEFAULT: "hsl(var(--ring))" },
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
@@ -86,20 +79,12 @@ const config: Config = {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
@@ -108,7 +93,5 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
-
-export default config
+  plugins: [tailwindcssAnimate],
+};
