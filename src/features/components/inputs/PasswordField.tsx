@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import * as React from "react";
 import type { Control, FieldValues, Path } from "react-hook-form";
@@ -10,7 +11,8 @@ import {
 import { useFormContext } from "react-hook-form";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
-import { Eye, EyeClosed, Lock } from "lucide-react";
+import { Eye, EyeClosed } from "lucide-react";
+import PasswordIcon from "../../assets/password.svg";
 
 interface Props<T extends FieldValues> {
   control: Control<T>;
@@ -35,7 +37,11 @@ export default function PasswordField<T extends FieldValues>({
       render={({ field }) => (
         <FormItem>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <img
+              src={PasswordIcon}
+              alt=""
+              className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-4 text-white"
+            />
             <FormControl>
               <Input
                 type={show ? "text" : "password"}

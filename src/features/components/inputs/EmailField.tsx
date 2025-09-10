@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import {
@@ -8,7 +9,7 @@ import {
 } from "../../../components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { Input } from "../../../components/ui/input";
-import { Mail } from "lucide-react";
+import EmailIcon from "../../assets/email.svg";
 
 type Props<T extends FieldValues> = {
   control: Control<T>;
@@ -32,7 +33,11 @@ export default function EmailField<T extends FieldValues>({
       render={({ field }) => (
         <FormItem>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <img
+              src={EmailIcon}
+              alt=""
+              className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-4 text-white"
+            />
             <FormControl>
               <Input
                 type="email"
