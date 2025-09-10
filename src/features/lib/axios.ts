@@ -78,17 +78,17 @@ axiosInstance.interceptors.response.use(
           // In tests, avoid calling window.location.assign (jsdom navigation not implemented).
           if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test") {
             try {
-              (window as any).__mockHref = "/login/customer";
+              (window as any).__mockHref = "/login";
             } catch {
               // ignore
             }
           } else {
             try {
-              window.location.assign("/login/customer");
+              window.location.assign("/login");
             } catch {
               // Fallback for environments where assign may not be writable
               // @ts-ignore
-              window.location.href = "/login/customer";
+              window.location.href = "/login";
             }
           }
         }
