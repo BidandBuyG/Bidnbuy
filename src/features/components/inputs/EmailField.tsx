@@ -6,6 +6,7 @@ import {
   FormControl,
   FormMessage,
 } from "../../../components/ui/form";
+import { useFormContext } from "react-hook-form";
 import { Input } from "../../../components/ui/input";
 import { Mail } from "lucide-react";
 
@@ -22,6 +23,8 @@ export default function EmailField<T extends FieldValues>({
   // label = "Email",
   placeholder = "Enter your email",
 }: Props<T>) {
+  const { clearErrors } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -35,8 +38,12 @@ export default function EmailField<T extends FieldValues>({
                 type="email"
                 placeholder={placeholder}
                 autoComplete="email"
-                className="pl-9 h-12 rounded-lg bg-white/5 border-[#0a1b1d] text-white placeholder:text-white"
+                className="pl-9 h-12 rounded-lg bg-[#007F931F] border-[#0a1b1d] text-white placeholder:text-white"
                 {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  clearErrors(field.name as any);
+                }}
               />
             </FormControl>
           </div>

@@ -7,6 +7,7 @@ import {
   FormControl,
   FormMessage,
 } from "../../../components/ui/form";
+import { useFormContext } from "react-hook-form";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
 import { Eye, EyeClosed, Lock } from "lucide-react";
@@ -25,6 +26,8 @@ export default function PasswordField<T extends FieldValues>({
   placeholder = "Enter your password",
 }: Props<T>) {
   const [show, setShow] = React.useState(false);
+  const { clearErrors } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -40,6 +43,10 @@ export default function PasswordField<T extends FieldValues>({
                 autoComplete="current-password"
                 className="pl-9 pr-10 h-12 rounded-lg bg-white/5 border-[#0a1b1d] text-white placeholder:text-white"
                 {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  clearErrors(field.name as any);
+                }}
               />
             </FormControl>
             <Button

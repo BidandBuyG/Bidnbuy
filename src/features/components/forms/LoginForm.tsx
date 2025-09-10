@@ -35,7 +35,7 @@ export default function LoginForm({
     // Immediately set initial slide (offscreen)
     setSlideIn(false);
     // Then slide in after a tick
-    const slideTimer = setTimeout(() => setSlideIn(true), 50); // 50ms is enough
+    const slideTimer = setTimeout(() => setSlideIn(true), 50); 
     const shakeTimer = setTimeout(() => setShowFieldsShake(true), 500);
     return () => {
       clearTimeout(slideTimer);
@@ -69,10 +69,10 @@ export default function LoginForm({
     >
       <div className="max-w-lg mx-auto w-full">
         {/* Social Login Buttons */}
-        <div className="flex gap-4 mb-6">
+        <div className="md:flex gap-4 mb-6 w-full space-y-5 md:space-y-0">
           <Button
             variant="outline"
-            className="flex-1 bg-transparent border-gray-600 text-white hover:bg-gray-800 h-12"
+            className="w-full flex-1 bg-transparent border-gray-600 text-white hover:bg-gray-800 h-12"
           >
             <img
               src={Google}
@@ -85,7 +85,7 @@ export default function LoginForm({
           </Button>
           <Button
             variant="outline"
-            className="flex-1 bg-transparent border-gray-600 text-white hover:bg-gray-800 h-12"
+            className="w-full flex-1 bg-transparent border-gray-600 text-white hover:bg-gray-800 h-12"
           >
             <img
               src={Twitter}
@@ -120,7 +120,7 @@ export default function LoginForm({
                 <PasswordField control={form.control} name="password" />
                 <div className="flex justify-end">
                   <a
-                    href="/vendor/forgot-password"
+                    href="/forgot-password"
                     className="ml-auto text-sm underline-offset-4 hover:underline text-white"
                   >
                     Forgot password?

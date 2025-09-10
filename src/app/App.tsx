@@ -5,6 +5,7 @@ import WalletOverview from "../features/wallet/pages/Overview";
 import WalletTransactions from "../features/wallet/pages/Transactions";
 import AdminConfig from "../features/admin/pages/Config";
 import Signup from "../features/auth/pages/Signup";
+import MarketerSignup from "../features/marketing/pages/Signup";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         {/* Angela’s work */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/marketing/signup" element={<MarketerSignup />} />
         <Route path="/marketing/referrals" element={<Referrals />} />
 
         {/* Joshua’s work */}

@@ -1,33 +1,28 @@
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+// import { Check, X } from "lucide-react";
 
 export const SuccessToast = (ToastMessage: string) => {
-  toast.success(`${ToastMessage}`, {
+  // Use plain text message to make assertions in tests reliable
+  toast.success(String(ToastMessage), {
     duration: 4500,
-    style: {
-      // border: "2px solid #00707B",
-      padding: "16px 32px",
-      color: "#00707B",
-    },
-    iconTheme: {
-      primary: "#059669",
-      secondary: "#FFFAEE",
-    },
     position: "top-center",
+    style: {
+      background: "#059669",
+      padding: "12px 16px",
+      borderRadius: "8px",
+    },
   });
 };
 
 export const ErrorToast = (ToastMessage: string) => {
-  toast.error(`${ToastMessage}`, {
+  // Use plain text message to make assertions in tests reliable
+  toast.error(String(ToastMessage), {
     duration: 4000,
-    style: {
-      // border: "2px solid #00707B",
-      padding: "16px 32px",
-      color: "#00707B",
-    },
-    iconTheme: {
-      primary: "#ff5555",
-      secondary: "#FFFAEE",
-    },
     position: "top-center",
+    style: {
+      background: "#dc2626",
+      padding: "12px 16px",
+      borderRadius: "8px",
+    },
   });
 };

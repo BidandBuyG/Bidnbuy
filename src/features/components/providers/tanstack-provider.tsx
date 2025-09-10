@@ -18,11 +18,18 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
           },
         },
         queryCache: new QueryCache({
-          onError: (error, query) => {
+          onError: (error: any, query) => {
+            // If axios marked this error to skip auth redirects, do nothing here
+            if (error && (error.__skipAuthRedirect || error?.config?.headers?.["X-Skip-Auth-Redirect"])) {
+              return;
+            }
+
             if (query.state.data !== undefined) {
-              if (error.message === "Request failed with status code 401") {
+              if (error && (error.message === "Request failed with status code 401" || error?.response?.status === 401)) {
                 session.clear(); // clear token
-                window.location.href = "/login"; // redirect to login page
+                try {
+                  window.location.href = "/login"; // redirect to login page
+                } catch {}
               }
             }
           },

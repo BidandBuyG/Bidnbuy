@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "@tanstack/react-query"
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query"
@@ -44,7 +45,7 @@ export function useAuthMutation<TVariables = any, TData = any>(
           email: "dev@example.com",
           phoneNumber: "08130039337",
           name: "Favour the React dev",
-          role: "customer",
+          role: "customer" as const,
         };
         store.setAuth("dev-fake-token", devUser)
 
@@ -65,7 +66,19 @@ export function useAuthMutation<TVariables = any, TData = any>(
 
     },
     onError: (error, variables, context) => {
-      toast.error((error as any)?.response?.data?.message || "Something went wrong")
+      const err: any = error;
+      // Network / CORS (request made but no response)
+      if (err?.message && /network|cors/i.test(err.message)) {
+        toast.error(err.message);
+      } else if (err?.request && !err?.response) {
+        toast.error(
+          "Network or CORS error: Unable to reach authentication server. Please verify VITE_API_URL and server CORS settings."
+        );
+      } else {
+        const message = (err?.response?.data?.message) || err?.message || "Something went wrong";
+        toast.error(message);
+      }
+
       if (options.onError) options.onError(error, variables, context)
     },
     ...options,

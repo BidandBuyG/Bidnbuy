@@ -24,13 +24,59 @@ export const signupSchema = z
       ),
     confirmPassword: z.string().optional(),
   })
-  .refine((data) => {
-    const hasConfirm = typeof data.confirmPassword === "string" && data.confirmPassword.length > 0;
-    return !hasConfirm || data.password === data.confirmPassword;
-  }, {
-    message: "Passwords don't match",
+  .refine(
+    (data) => {
+      const hasConfirm =
+        typeof data.confirmPassword === "string" &&
+        data.confirmPassword.length > 0;
+      return !hasConfirm || data.password === data.confirmPassword;
+    },
+    {
+      message: "Passwords don't match",
+      path: ["confirmPassword"],
+    }
+  );
+
+export const signupMarketingSchema = z.object({
+  firstName: z.string().min(2, "Minimum of 2 characters is required"),
+  lastName: z.string().min(2, "Minimum of 2 characters is required"),
+  email: z.string().email("Invalid email address"),
+  description: z.string().optional(),
+  address: z.string().min(3, "Address must be at least 3 characters"),
+  // .optional()
+  state: z.string().min(2, "State must be at least 2 characters"),
+  // .optional(),
+  nin: z.string().min(11, "NIN must be at least 11 characters"),
+  // .optional(),
+  document: z.instanceof(File).optional(),
+});
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Enter a valid email"),
+});
+
+export const passwordOtpSchema = z.object({
+  otp: z.string().min(6, {
+    message: "Your one-time password must be 6 characters.",
+  }),
+});
+
+export const changepasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(72, "Password is too long"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
+    message: "Passwords do not match",
   });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignupFormValues = z.infer<typeof signupSchema>;
+export type SignupMarketingFormValues = z.infer<typeof signupMarketingSchema>;
+export type ForgotPasswordFormValues= z.infer<typeof forgotPasswordSchema>;
+export type PasswordOtpFormValues = z.infer<typeof passwordOtpSchema>;
+export type ChangePasswordFormValues = z.infer<typeof changepasswordSchema>;

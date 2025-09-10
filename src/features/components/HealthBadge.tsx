@@ -1,7 +1,7 @@
 "use client";
-import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useHealthCheck } from "../hooks/useHealthCheck";
+import { ErrorToast, SuccessToast } from "./Toasts";
 
 export function HealthBadge() {
   const {
@@ -12,10 +12,10 @@ export function HealthBadge() {
 
   useEffect(() => {
     if (data) {
-      toast.success(`Health: ${JSON.stringify(data)}`, { duration: 5000 });
+      SuccessToast(`Health: ${JSON.stringify(data)}`);
     }
     if (error) {
-      toast.error("Health check failed");
+      ErrorToast("Health check failed");
     }
   }, [data, error]);
 

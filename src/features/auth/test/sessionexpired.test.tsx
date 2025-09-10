@@ -40,7 +40,7 @@ describe("SessionExpired", () => {
     expect(localStorage.getItem("auth-storage")).toBeNull();
 
     // In our test-friendly interceptor we set __mockHref on window for redirects
-    expect((window as any).__mockHref).toBe("/login/customer");
+    expect((window as any).__mockHref).toBe("/login");
 
     logoutSpy.mockRestore();
   });

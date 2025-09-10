@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app/App";
 import "./App.css";
-import { Toaster } from "react-hot-toast";
+import { Toaster as SonnerToaster } from "sonner";
 import { HealthBadge } from "./features/components/HealthBadge";
 import TanstackProvider from "./features/components/providers/tanstack-provider";
 
@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
     <TanstackProvider>
       <HealthBadge />
-      <Toaster />
+      <SonnerToaster />
       <App />
     </TanstackProvider>
   </React.StrictMode>

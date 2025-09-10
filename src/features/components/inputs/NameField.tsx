@@ -28,7 +28,7 @@ export default function NameField<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-full">
           {/* <FormLabel className="text-white/80">{label}</FormLabel> */}
           <div className="relative">
             <UserRound className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
@@ -37,7 +37,7 @@ export default function NameField<T extends FieldValues>({
                 type="text"
                 placeholder={placeholder}
                 autoComplete="name"
-                className="pl-9 h-12 rounded-lg bg-white/5 border-[#0a1b1d] text-white placeholder:text-white"
+                className="pl-9 h-12 rounded-lg bg-[#007F931F] border-[#0a1b1d] text-white placeholder:text-white"
                 {...field}
               />
             </FormControl>

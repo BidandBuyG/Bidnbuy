@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 
-const baseURL = (import.meta.env?.VITE_API_URL as string) || "";
+const baseURL = (typeof process !== 'undefined' && (process.env?.VITE_API_URL as string)) || (globalThis as any).__VITE_API_URL || "";
 
 export const axiosInstance = axios.create({
   baseURL,
@@ -47,29 +47,49 @@ import { useAuthStore } from "../store/auth";
 axiosInstance.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err?.response?.status === 401) {
+    // If server responded 401, handle logout/redirect, unless caller asked to skip the auth redirect
+    const status = err?.response?.status;
+    const skipRedirect = Boolean(
+      err?.config?.headers?.["X-Skip-Auth-Redirect"] ||
+        err?.config?.headers?.["x-skip-auth-redirect"]
+    );
+
+    if (status === 401) {
+      // mark error so other global handlers can choose to ignore redirects
       try {
-        // Dispatch logout to clear session
-        try {
-          useAuthStore.getState().logout();
-        } catch (_e) {
-          // ignore
+        // attach a flag to the error object so QueryCache onError can detect skip
+        if (skipRedirect) {
+          try {
+            // non-enumerable to avoid serializing accidentally
+            Object.defineProperty(err, "__skipAuthRedirect", { value: true });
+          } catch {
+            // intentionally ignored
+          }
         }
 
-        // In tests, avoid calling window.location.assign (jsdom navigation not implemented).
-        if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test") {
+        if (!skipRedirect) {
+          // Dispatch logout to clear session
           try {
-            (window as any).__mockHref = "/login/customer";
-          } catch {
+            useAuthStore.getState().logout();
+          } catch (_e) {
             // ignore
           }
-        } else {
-          try {
-            window.location.assign("/login/customer");
-          } catch {
-            // Fallback for environments where assign may not be writable
-            // @ts-ignore
-            window.location.href = "/login/customer";
+
+          // In tests, avoid calling window.location.assign (jsdom navigation not implemented).
+          if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test") {
+            try {
+              (window as any).__mockHref = "/login/customer";
+            } catch {
+              // ignore
+            }
+          } else {
+            try {
+              window.location.assign("/login/customer");
+            } catch {
+              // Fallback for environments where assign may not be writable
+              // @ts-ignore
+              window.location.href = "/login/customer";
+            }
           }
         }
       } catch (_e) {

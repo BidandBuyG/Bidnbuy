@@ -38,7 +38,7 @@ const createWrapper = (ui: React.ReactElement, route = "/signup") => {
             path="/marketing/referrals"
             element={<div>Referrals Page</div>}
           />
-          <Route path="/login/customer" element={<div>Login Page</div>} />
+          <Route path="/login" element={<div>Login Page</div>} />
         </Routes>
       </MemoryRouter>
     </QueryClientProvider>

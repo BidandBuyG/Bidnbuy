@@ -15,6 +15,8 @@ interface AuthTemplateProps {
   slideFrom?: "left" | "right";
   cta?: string;
   loading?: boolean;
+  showHeader?: boolean;
+  showFooter?: boolean;
 }
 
 const images = [Img2, Img1, Img3];
@@ -42,6 +44,8 @@ export default function AuthTemplate({
   children,
   footer,
   slideFrom = "left",
+  showHeader = true,
+  showFooter = true,
 }: AuthTemplateProps) {
   const [showFieldsShake, setShowFieldsShake] = useState(false);
   const [slideIn, setSlideIn] = useState(false);
@@ -63,9 +67,9 @@ export default function AuthTemplate({
   const fieldsshakeclass = showFieldsShake ? "animate-shake" : "";
 
   return (
-    <div className="min-h-screen flex bg-[#0a1b1d]">
+    <div className="min-h-screen flex bg-[#00191F]">
       {/* Left Side - Form */}
-      <div className="flex-1 bg-[#0a1b1d] flex flex-col px-12 py-8">
+      <div className="flex-1 bg-[#00191F] flex flex-col px-12 py-8">
         <div className="max-w-lg mx-auto w-full">
           {/* Logo */}
           <div className="rounded-lg flex items-center -ml-5">
@@ -76,21 +80,23 @@ export default function AuthTemplate({
 
           <div className="mt-[5em] flex flex-col justify-center">
             {/* Header */}
-            <div
-              className={`mb-8 transform transition-transform duration-500 ease-out ${fieldsTranslateClass}`}
-            >
-              <div className={fieldsshakeclass}>
-                <h1 className="text-white text-3xl font-semibold mb-3">
-                  {title}
-                </h1>
-                <p className="text-[#FFFFFF80] text-base">{description}</p>
+            {showHeader ? (
+              <div
+                className={`mb-8 transform transition-transform duration-500 ease-out ${fieldsTranslateClass}`}
+              >
+                <div className={fieldsshakeclass}>
+                  <h1 className="text-white text-3xl font-semibold mb-1">
+                    {title}
+                  </h1>
+                  <p className="text-[#FFFFFF80] text-base">{description}</p>
+                </div>
               </div>
-            </div>
+            ) : null}
 
             {/* This is where the Form is rendered */}
             {children}
 
-            {footer ? (
+            {footer && showFooter ? (
               <div
                 className={`text-center text-gray-300 transform transition-transform duration-500 ease-out ${fieldsTranslateClass}`}
               >
@@ -102,7 +108,7 @@ export default function AuthTemplate({
       </div>
 
       {/* Right Side - Carousel */}
-      <div className="flex-1 relative overflow-hidden">
+      <div className="flex-1 relative overflow-hidden hidden lg:flex">
         <div className="relative w-full h-full">
           <ImageCarousel
             images={images}

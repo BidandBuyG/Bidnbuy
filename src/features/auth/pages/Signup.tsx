@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { authService } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthMutation } from "../../hooks/useAuthMutation";
 import SignupForm from "../../components/forms/SignupForm";
 import { SignupFormValues, signupSchema } from "../../lib/validations/auth";
+import { ErrorToast, SuccessToast } from "../../components/Toasts";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -20,9 +20,11 @@ export default function Signup() {
       confirmPassword: "",
       acceptTerms: false,
     },
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
 
-  const loginMutation = useAuthMutation<
+  const signupMutation = useAuthMutation<
     SignupFormValues,
     import("../../services/auth").AuthResponse
   >(
@@ -37,7 +39,7 @@ export default function Signup() {
     },
     {
       onSuccess: (data, variables) => {
-        toast.success("Account created successfully!");
+        SuccessToast("Account created successfully!");
         form.reset();
         console.log("Vendor Signup response:", data);
         navigate("/marketing/referrals", {
@@ -49,19 +51,19 @@ export default function Signup() {
           error?.response?.data?.message ||
           error?.message || // This will catch "Network Error"
           "An error occurred. Please try again.";
-        toast.error(message);
+        ErrorToast(message);
       },
     }
   );
 
   function onSubmit(values: SignupFormValues) {
-    loginMutation.mutate(values);
+    signupMutation.mutate(values);
   }
   return (
     <SignupForm
       form={form}
       onSubmit={onSubmit}
-      isLoading={loginMutation.isPending}
+      isLoading={signupMutation.isPending}
     />
   );
 }

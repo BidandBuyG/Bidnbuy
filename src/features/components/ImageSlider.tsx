@@ -48,8 +48,8 @@ const ImageCarousel: React.FC<CarouselProps> = ({
   return (
     <div
       ref={sliderRef}
-      // className="w-full h-full relative flex items-center justify-center overflow-hidden bg-[#0a1b1d]"
-      className="absolute inset-0 overflow-hidden bg-[#0a1b1d]"
+      // className="w-full h-full relative flex items-center justify-center overflow-hidden bg-[#00191F]"
+      className="absolute inset-0 overflow-hidden bg-[#00191F]"
     >
       <img
         src={

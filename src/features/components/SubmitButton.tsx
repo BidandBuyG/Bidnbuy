@@ -9,6 +9,7 @@ type SubmitButtonProps = {
   disabled?: boolean;
   className?: string;
   type?: "button" | "submit" | "reset";
+  onClick?: () => void;
 };
 
 export default function SubmitButton({
@@ -18,6 +19,7 @@ export default function SubmitButton({
   disabled,
   className = "",
   type = "submit",
+  onClick,
 }: SubmitButtonProps) {
   const [isMounted, setIsMounted] = useState(false);
   const isDisabled = useMemo(() => disabled || loading, [disabled, loading]);
@@ -33,6 +35,7 @@ export default function SubmitButton({
       type={type}
       className={`w-full bg-[#EE9F05] hover:bg-[#b89e6a] h-12 mt-3 transition-transform duration-500 ease-out ${translateYClass} ${className}`}
       disabled={isDisabled}
+      onClick={onClick}
     >
       {loading ? loadingText : cta}
     </Button>
