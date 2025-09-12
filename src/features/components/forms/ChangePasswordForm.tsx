@@ -4,37 +4,32 @@ import { useEffect, useState } from "react";
 import AuthTemplate from "../AuthCardTemplate";
 import { Button } from "../../../components/ui/button";
 import { getSlideClass } from "../../lib/utils";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "../../../components/ui/form";
-import type { PasswordOtpFormValues } from "../../lib/validations/auth";
-import { ArrowBigLeft } from "lucide-react";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "../../../components/ui/input-otp";
+import { Form } from "../../../components/ui/form";
+import type { ChangePasswordFormValues } from "../../lib/validations/auth";
+import PasswordField from "../inputs/PasswordField";
+import { ArrowLeft } from "lucide-react";
+import PasswordSuccessImage from "../../assets/password-success.png";
 
 interface LoginFormProps {
-  form: UseFormReturn<PasswordOtpFormValues>;
-  onSubmit: (values: PasswordOtpFormValues) => void;
+  form: UseFormReturn<ChangePasswordFormValues>;
+  onSubmit: (values: ChangePasswordFormValues) => void;
   isLoading?: boolean;
   cta?: string;
   slideFrom?: "left" | "right";
+  isSuccess?: boolean;
 }
 
-export default function LoginForm({
+export default function ChangePasswordForm({
   onSubmit,
   cta = "Reset Password",
   slideFrom = "right",
   isLoading,
   form,
+  isSuccess,
 }: LoginFormProps) {
   const [slideIn, setSlideIn] = useState(false);
+
+  console.log(form.formState.errors);
 
   useEffect(() => {
     // Immediately set initial slide (offscreen)
@@ -48,20 +43,34 @@ export default function LoginForm({
 
   const fieldsTranslateClass = getSlideClass(slideIn, slideFrom);
 
-  return (
+  return isSuccess ? (
     <AuthTemplate
-      title="Password reset?"
-      description="No worries we will send you reset instructions."
+      title="Password reset successful"
+      description="Your password has been reset."
       slideFrom="right"
-      cta={cta}
-      loading={form.formState.isSubmitting || isLoading}
+      footer={""}
+    >
+      <div className="max-w-lg mx-auto w-full">
+        <div className="space-y-4 mb-6">
+          <div>
+            <img
+              src={PasswordSuccessImage}
+              alt=""
+              className="w-[336px] h-[226px]"
+            />
+          </div>
+        </div>
+      </div>
+    </AuthTemplate>
+  ) : (
+    <AuthTemplate
+      title="Set new password?"
+      description="Must be at least 8 characters."
+      slideFrom="right"
       footer={
-        <div className="flex items-center justify-center">
-          <ArrowBigLeft />
-          <a
-            href="/vendor/login"
-            className="text-[#EE9F05] underline underline-offset-4 hover:text-[#b89e6a]"
-          >
+        <div className="flex items-center justify-center gap-2">
+          <ArrowLeft className="mt-1" />
+          <a href="/login" className="text-[#EE9F05] hover:text-[#b89e6a]">
             {" "}
             Back to login
           </a>
@@ -69,7 +78,6 @@ export default function LoginForm({
       }
     >
       <div className="max-w-lg mx-auto w-full">
-        {/* Form Fields */}
         <div className="space-y-4 mb-6">
           <Form {...form}>
             <form
@@ -80,29 +88,15 @@ export default function LoginForm({
               <div
                 className={`space-y-4 transform transition-transform duration-500 ease-out ${fieldsTranslateClass}`}
               >
-                <FormField
+                <PasswordField<ChangePasswordFormValues>
                   control={form.control}
-                  name="otp"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <InputOTP maxLength={6} {...field}>
-                          <InputOTPGroup>
-                            <InputOTPSlot index={0} />
-                            <InputOTPSlot index={1} />
-                            <InputOTPSlot index={2} />
-                            <InputOTPSlot index={3} />
-                            <InputOTPSlot index={4} />
-                            <InputOTPSlot index={5} />
-                          </InputOTPGroup>
-                        </InputOTP>
-                      </FormControl>
-                      {/* <FormDescription>
-                        Please enter the one-time password sent to your phone.
-                      </FormDescription> */}
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  name="password"
+                />
+
+                <PasswordField<ChangePasswordFormValues>
+                  control={form.control}
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
                 />
               </div>
               <Button
@@ -111,22 +105,10 @@ export default function LoginForm({
                 disabled={form.formState.isSubmitting || isLoading}
               >
                 {form.formState.isSubmitting || isLoading
-                  ? "Verifying..."
+                  ? "Submitting..."
                   : cta}
               </Button>
             </form>
-            <p className="text-white text-center pb-5">
-              <span>
-                Did not receive the email?
-                <a
-                  href="/vendor/signup"
-                  className="text-[#EE9F05] hover:text-[#b89e6a]"
-                >
-                  {" "}
-                  Click here
-                </a>
-              </span>
-            </p>
           </Form>
         </div>
       </div>

@@ -33,7 +33,7 @@ export default function Signup() {
         name: values.name,
         email: values.email,
         password: values.password,
-        acceptTerms: values.acceptTerms,
+        // acceptTerms: values.acceptTerms,
         userRole: "vendor",
       } as any);
     },
@@ -47,10 +47,14 @@ export default function Signup() {
         });
       },
       onError: (error: any) => {
-        const message =
+        let message =
           error?.response?.data?.message ||
-          error?.message || // This will catch "Network Error"
+          error?.message ||
           "An error occurred. Please try again.";
+        // Always call ErrorToast for 401 errors
+        if (error?.response?.status === 401) {
+          message = "Session expired. Please login again.";
+        }
         ErrorToast(message);
       },
     }

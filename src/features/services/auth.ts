@@ -122,7 +122,7 @@ export const authService = {
     console.log("Logout response:", response.data);
   },
 
-  verifyEmail: async (email: string): Promise<void> => {
+  verifyEmail: async ({ email }: { email: string }): Promise<AuthResponse> => {
     const response = await axiosInstance.post("/api/v1/auth/forgot-password", {
       email,
     });
@@ -130,10 +130,38 @@ export const authService = {
     return response.data;
   },
 
-  verifyOtpFunc: async (otp: string): Promise<void> => {
+  verifyOtpFunc: async ({ otp }: { otp: string }): Promise<AuthResponse> => {
     const response = await axiosInstance.post("/api/v1/auth/verify-email", {
       otp,
     });
+    console.log("Email verification response:", response.data);
+    return response.data;
+  },
+
+  resendOtp: async ({ email }: { email: string }): Promise<AuthResponse> => {
+    const response = await axiosInstance.post("/api/v1/auth/resend-otp", {
+      email,
+    });
+    console.log("Email verification response:", response.data);
+    return response.data;
+  },
+
+  changePasswordFunc: async ({
+    password,
+    confirmPassword,
+    token,
+  }: {
+    password: string;
+    confirmPassword: string;
+    token: string | null;
+  }): Promise<AuthResponse> => {
+    const response = await axiosInstance.post(
+      `/api/v1/auth/reset-password?token=${token}`,
+      {
+        password,
+        confirmPassword,
+      }
+    );
     console.log("Email verification response:", response.data);
     return response.data;
   },

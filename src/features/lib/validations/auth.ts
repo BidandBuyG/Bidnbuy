@@ -22,7 +22,7 @@ export const signupSchema = z
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
         "Password must contain at least one uppercase letter, one lowercase letter, and one number"
       ),
-    confirmPassword: z.string().optional(),
+    confirmPassword: z.string().min(1, "Confirm Password is required"),
   })
   .refine(
     (data) => {
@@ -65,18 +65,22 @@ export const changepasswordSchema = z
   .object({
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(72, "Password is too long"),
-    confirmPassword: z.string(),
+      .min(6, "Password must be at least 6 characters")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+      ),
+    confirmPassword: z.string().min(1, "Confirm Password is required"),
+    token: z.string().min(1, "Token is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
     path: ["confirmPassword"],
-    message: "Passwords do not match",
   });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignupFormValues = z.infer<typeof signupSchema>;
 export type SignupMarketingFormValues = z.infer<typeof signupMarketingSchema>;
-export type ForgotPasswordFormValues= z.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 export type PasswordOtpFormValues = z.infer<typeof passwordOtpSchema>;
 export type ChangePasswordFormValues = z.infer<typeof changepasswordSchema>;

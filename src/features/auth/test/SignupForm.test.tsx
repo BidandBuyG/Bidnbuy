@@ -52,14 +52,11 @@ const fillAndSubmit = async (overrides: Partial<any> = {}) => {
 
   const nameInput = screen.getByPlaceholderText(/enter your name/i);
   const emailInput = screen.getByPlaceholderText(/enter your email/i);
-  const passwordInput = screen.getByPlaceholderText(/enter your password/i);
-  const confirmInput = screen.getByPlaceholderText(/enter your password/i);
+  const passwordInputs = screen.getAllByPlaceholderText(/enter your password/i);
 
   fireEvent.change(nameInput, { target: { value: name } });
   fireEvent.change(emailInput, { target: { value: email } });
-  fireEvent.change(passwordInput, { target: { value: password } });
-  // The confirm password is the second password input; select by role/buttoning through the DOM
-  const passwordInputs = screen.getAllByPlaceholderText(/enter your password/i);
+  fireEvent.change(passwordInputs[0], { target: { value: password } });
   if (passwordInputs.length > 1) {
     fireEvent.change(passwordInputs[1], { target: { value: password } });
   }
@@ -67,16 +64,9 @@ const fillAndSubmit = async (overrides: Partial<any> = {}) => {
   const checkbox = screen.getByRole("checkbox");
   fireEvent.click(checkbox);
 
-  // submit the form directly (more reliable in tests)
-  const form = screen.queryByRole("form") || document.querySelector("form");
-  if (form) {
-    fireEvent.submit(form);
-  } else {
-    const submitBtn = screen.getByRole("button", {
-      name: /login|submit|create/i,
-    });
-    fireEvent.click(submitBtn);
-  }
+  // Click the submit button labeled 'Sign Up'
+  const submitBtn = screen.getByRole("button", { name: /sign up/i });
+  fireEvent.click(submitBtn);
 };
 
 beforeEach(() => {
@@ -89,9 +79,7 @@ describe("SignupForm & SessionExpired", () => {
     createWrapper(<Signup />);
 
     // Submit without filling
-    fireEvent.click(
-      screen.getByRole("button", { name: /login|submit|create/i })
-    );
+    fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
 
     expect(
       await screen.findByText(/Name must be at least 2 characters/i)
@@ -119,19 +107,15 @@ describe("SignupForm & SessionExpired", () => {
 
     await fillAndSubmit();
 
-    // Ensure the axios post function was called (signup attempted)
+    // Wait for axios post and toast to be called
     await waitFor(() => {
       expect(postSpy).toHaveBeenCalled();
-    });
-
-    // Optionally the UI should show an error via toast
-    if ((toast.error as jest.Mock).mock.calls.length > 0) {
       expect(
         (toast.error as jest.Mock).mock.calls.some((c) =>
           /email already exists/i.test(String(c[0]))
         )
       ).toBe(true);
-    }
+    });
 
     postSpy.mockRestore();
   });
@@ -166,18 +150,15 @@ describe("SignupForm & SessionExpired", () => {
 
     await fillAndSubmit();
 
-    // Ensure the axios post was called
+    // Wait for axios post and toast to be called
     await waitFor(() => {
       expect(postSpy).toHaveBeenCalled();
+      expect(
+        (toast.error as jest.Mock).mock.calls.some((c) =>
+          /session expired|unauthorized/i.test(String(c[0]))
+        )
+      ).toBe(true);
     });
-
-    // If toast was used, ensure it was called
-    if ((toast.error as jest.Mock).mock.calls.length > 0) {
-      const found = (toast.error as jest.Mock).mock.calls.some((c) =>
-        /session expired|unauthorized/i.test(String(c[0]))
-      );
-      expect(found).toBe(true);
-    }
 
     // Simulate global axios interceptor handling (redirect on 401)
     const handlers =

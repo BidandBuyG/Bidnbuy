@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  ForgotPasswordFormValues,
-  forgotPasswordSchema,
+  PasswordOtpFormValues,
+  passwordOtpSchema,
 } from "../../lib/validations/auth";
 import { authService } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
@@ -10,24 +10,24 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthMutation } from "../../hooks/useAuthMutation";
 import { ErrorToast, SuccessToast } from "../../components/Toasts";
-import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
+import ForgotOtpForm from "../../components/forms/PasswordOtpForm";
 
-export default function ForgotPassword() {
+export default function VerifyEmail() {
   const navigate = useNavigate();
 
-  const form = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(forgotPasswordSchema),
+  const form = useForm<PasswordOtpFormValues>({
+    resolver: zodResolver(passwordOtpSchema),
     defaultValues: {
-      email: "",
+      otp: "",
     },
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
   const loginMutation = useAuthMutation<
-    ForgotPasswordFormValues,
+    PasswordOtpFormValues,
     import("../../services/auth").AuthResponse
-  >(authService.verifyEmail, {
+  >(authService.verifyOtpFunc, {
     onSuccess: (data) => {
       try {
         console.log({ data });
@@ -35,9 +35,9 @@ export default function ForgotPassword() {
         // ignore errors when localStorage isn't available
       }
 
-      SuccessToast("Kindly check your mail for OTP!");
+      SuccessToast("Email Verified successfully!");
       form.reset();
-      //  navigate("/marketing/referrals");
+      // navigate("/marketing/referrals");
     },
     onError: (error: any) => {
       const message =
@@ -47,13 +47,13 @@ export default function ForgotPassword() {
     },
   });
 
-  function onSubmit(values: ForgotPasswordFormValues) {
+  function onSubmit(values: PasswordOtpFormValues) {
     console.log({ values });
     loginMutation.mutate(values);
   }
 
   return (
-    <ForgotPasswordForm
+    <ForgotOtpForm
       form={form}
       onSubmit={onSubmit}
       isLoading={loginMutation.isPending}

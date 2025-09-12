@@ -30,7 +30,7 @@ export type SignupFormProps = {
 
 export default function SignupForm({
   onSubmit,
-  cta = "Login",
+  cta = "Sign Up",
   slideFrom = "left",
   isLoading,
   form,

@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import type { PasswordOtpFormValues } from "../../lib/validations/auth";
-import { ArrowBigLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import {
   InputOTP,
   InputOTPGroup,
@@ -27,7 +27,7 @@ interface LoginFormProps {
   slideFrom?: "left" | "right";
 }
 
-export default function LoginForm({
+export default function ForgotOtpForm({
   onSubmit,
   cta = "Continue",
   slideFrom = "right",
@@ -56,12 +56,9 @@ export default function LoginForm({
       cta={cta}
       loading={form.formState.isSubmitting || isLoading}
       footer={
-        <div className="flex items-center justify-center">
-          <ArrowBigLeft />
-          <a
-            href="/vendor/login"
-            className="text-[#EE9F05] underline underline-offset-4 hover:text-[#b89e6a]"
-          >
+        <div className="flex items-center justify-center gap-2">
+          <ArrowLeft className="mt-1" />
+          <a href="/login" className="text-[#EE9F05] hover:text-[#b89e6a]">
             {" "}
             Back to login
           </a>

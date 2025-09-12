@@ -1,33 +1,38 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  ForgotPasswordFormValues,
-  forgotPasswordSchema,
+  ChangePasswordFormValues,
+  changepasswordSchema,
 } from "../../lib/validations/auth";
 import { authService } from "../../services/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthMutation } from "../../hooks/useAuthMutation";
 import { ErrorToast, SuccessToast } from "../../components/Toasts";
-import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
+import ChangePasswordForm from "../../components/forms/ChangePasswordForm";
 
-export default function ForgotPassword() {
+export default function ChangePassword() {
   const navigate = useNavigate();
+  // const [searchParams] = useSearchParams();
+  // const token = searchParams.get("token");
+  const token = "dummy-token";
 
-  const form = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(forgotPasswordSchema),
+  const form = useForm<ChangePasswordFormValues>({
+    resolver: zodResolver(changepasswordSchema),
     defaultValues: {
-      email: "",
+      password: "",
+      confirmPassword: "",
+      token: token ?? undefined,
     },
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
   const loginMutation = useAuthMutation<
-    ForgotPasswordFormValues,
+    ChangePasswordFormValues,
     import("../../services/auth").AuthResponse
-  >(authService.verifyEmail, {
+  >(authService.changePasswordFunc, {
     onSuccess: (data) => {
       try {
         console.log({ data });
@@ -35,9 +40,9 @@ export default function ForgotPassword() {
         // ignore errors when localStorage isn't available
       }
 
-      SuccessToast("Kindly check your mail for OTP!");
+      SuccessToast("Password set successfully!");
       form.reset();
-      //  navigate("/marketing/referrals");
+      // navigate("/marketing/referrals");
     },
     onError: (error: any) => {
       const message =
@@ -47,13 +52,13 @@ export default function ForgotPassword() {
     },
   });
 
-  function onSubmit(values: ForgotPasswordFormValues) {
+  function onSubmit(values: ChangePasswordFormValues) {
     console.log({ values });
     loginMutation.mutate(values);
   }
 
   return (
-    <ForgotPasswordForm
+    <ChangePasswordForm
       form={form}
       onSubmit={onSubmit}
       isLoading={loginMutation.isPending}

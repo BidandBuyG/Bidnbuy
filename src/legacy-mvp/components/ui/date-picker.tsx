@@ -8,7 +8,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/src/components/ui/popover"
 
 type DatePickerProps = {
   date: Date | undefined;

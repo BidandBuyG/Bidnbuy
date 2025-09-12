@@ -1,19 +1,30 @@
-import type React from "react"
+import type React from "react";
 
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { forwardRef } from "react"
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
+import { forwardRef } from "react";
 
 type UploadProductFormFieldProps = {
-  label: string
-  error?: string
-  required?: boolean
-  children: React.ReactNode
-}
+  label: string;
+  error?: string;
+  required?: boolean;
+  children: React.ReactNode;
+};
 
-export function UploadProductFormField({ label, error, required, children }: UploadProductFormFieldProps) {
+export function UploadProductFormField({
+  label,
+  error,
+  required,
+  children,
+}: UploadProductFormFieldProps) {
   return (
     <div className="space-y-2">
       <Label className="text-white text-sm font-normal">
@@ -23,14 +34,18 @@ export function UploadProductFormField({ label, error, required, children }: Upl
       {children}
       {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
     </div>
-  )
+  );
 }
 
-interface UploadProductFormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  error?: boolean
+interface UploadProductFormInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  error?: boolean;
 }
 
-export const UploadProductFormInput = forwardRef<HTMLInputElement, UploadProductFormInputProps>(({ error, className = "", ...props }, ref) => {
+export const UploadProductFormInput = forwardRef<
+  HTMLInputElement,
+  UploadProductFormInputProps
+>(({ error, className = "", ...props }, ref) => {
   return (
     <Input
       ref={ref}
@@ -39,37 +54,44 @@ export const UploadProductFormInput = forwardRef<HTMLInputElement, UploadProduct
       } ${className}`}
       {...props}
     />
-  )
-})
-UploadProductFormInput.displayName = "UploadProductFormInput"
+  );
+});
+UploadProductFormInput.displayName = "UploadProductFormInput";
 
-type UploadProductFormTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  error?: boolean
-}
+type UploadProductFormTextareaProps =
+  React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    error?: boolean;
+  };
 
-export const UploadProductFormTextarea = forwardRef<HTMLTextAreaElement, UploadProductFormTextareaProps>(
-  ({ error, className = "", ...props }, ref) => {
-    return (
-      <Textarea
-        ref={ref}
-        className={`bg-[#01151C] border-[#00707B] text-white placeholder:text-gray-500 focus:border-[#00707B] focus:ring-0 min-h-[120px] md:min-h-[150px] resize-none rounded-md ${
-          error ? "border-red-400" : ""
-        } ${className}`}
-        {...props}
-      />
-    )
-  },
-)
-UploadProductFormTextarea.displayName = "UploadProductFormTextarea"
+export const UploadProductFormTextarea = forwardRef<
+  HTMLTextAreaElement,
+  UploadProductFormTextareaProps
+>(({ error, className = "", ...props }, ref) => {
+  return (
+    <Textarea
+      ref={ref}
+      className={`bg-[#01151C] border-[#00707B] text-white placeholder:text-gray-500 focus:border-[#00707B] focus:ring-0 min-h-[120px] md:min-h-[150px] resize-none rounded-md ${
+        error ? "border-red-400" : ""
+      } ${className}`}
+      {...props}
+    />
+  );
+});
+UploadProductFormTextarea.displayName = "UploadProductFormTextarea";
 
 type UploadProductFormSelectProps = {
-  placeholder: string
-  options: { value: string; label: string }[]
-  onValueChange: (value: string) => void
-  error?: boolean
-}
+  placeholder: string;
+  options: { value: string; label: string }[];
+  onValueChange: (value: string) => void;
+  error?: boolean;
+};
 
-export function UploadProductFormSelect({ placeholder, options, onValueChange, error }: UploadProductFormSelectProps) {
+export function UploadProductFormSelect({
+  placeholder,
+  options,
+  onValueChange,
+  error,
+}: UploadProductFormSelectProps) {
   return (
     <Select onValueChange={onValueChange}>
       <SelectTrigger
@@ -87,17 +109,22 @@ export function UploadProductFormSelect({ placeholder, options, onValueChange, e
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 type PriceInputProps = {
-  placeholder?: string
-  error?: boolean
-  onChange: (value: string) => void
-  value: string
-}
+  placeholder?: string;
+  error?: boolean;
+  onChange: (value: string) => void;
+  value: string;
+};
 
-export function PriceInput({ placeholder, error, onChange, value }: PriceInputProps) {
+export function PriceInput({
+  placeholder,
+  error,
+  onChange,
+  value,
+}: PriceInputProps) {
   return (
     <div className="flex">
       <div className="bg-[#01151C] border-[#00707B] border px-3 py-3 text-gray-500 text-sm rounded-l-md flex items-center">
@@ -116,5 +143,5 @@ export function PriceInput({ placeholder, error, onChange, value }: PriceInputPr
         }`}
       />
     </div>
-  )
+  );
 }
