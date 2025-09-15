@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { authService } from "../../services/auth";
+import { authService } from "../../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthMutation } from "../../hooks/useAuthMutation";
+import { useAuthMutation } from "@/hooks/useAuthMutation";
 import {
   SignupMarketingFormValues,
   signupMarketingSchema,
-} from "../../lib/validations/auth";
-import { ErrorToast, SuccessToast } from "../../components/Toasts";
-import SignupMarketerForm from "../../components/forms/SignupMarketerForm";
+} from "../../../lib/validations/auth";
+import { ErrorToast, SuccessToast } from "../../../components/Toasts";
+import SignupMarketerForm from "../components/SignupMarketerForm";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -78,7 +78,7 @@ export default function MarketerSignup() {
 
   const signupMutation = useAuthMutation<
     SignupMarketingFormValues,
-    import("../../services/auth").AuthResponse
+    import("../../../services/auth").AuthResponse
   >(
     async (values) => {
       return authService.signupMarketer({

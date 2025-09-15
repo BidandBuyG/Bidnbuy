@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import LoginForm from "../../components/forms/LoginForm";
-import { loginSchema, type LoginFormValues } from "../../lib/validations/auth";
-import { authService } from "../../services/auth";
+import {
+  loginSchema,
+  type LoginFormValues,
+} from "../../../lib/validations/auth";
+import { authService } from "../../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthMutation } from "../../hooks/useAuthMutation";
-import { ErrorToast, SuccessToast } from "../../components/Toasts";
+import { useAuthMutation } from "../../../hooks/useAuthMutation";
+import { ErrorToast, SuccessToast } from "../../../components/Toasts";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,7 +27,7 @@ export default function Login() {
 
   const loginMutation = useAuthMutation<
     LoginFormValues,
-    import("../../services/auth").AuthResponse
+    import("../../../services/auth").AuthResponse
   >(authService.login, {
     onSuccess: (data) => {
       try {

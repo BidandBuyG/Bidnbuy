@@ -8,16 +8,17 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import { useEffect, useMemo, useState } from "react";
-import AuthTemplate from "../AuthCardTemplate";
 import { Button } from "../../../components/ui/button";
-import { getSlideClass } from "../../lib/utils";
-import EmailField from "../inputs/EmailField";
-import { SignupMarketingFormValues } from "../../lib/validations/auth";
-import NameField from "../inputs/NameField";
+import { getSlideClass } from "../../../lib/utils";
+import EmailField from "../../../components/inputs/EmailField";
+import { SignupMarketingFormValues } from "../../../lib/validations/auth";
+import NameField from "../../../components/inputs/NameField";
 import { Mail, Upload } from "lucide-react";
 import { Input } from "../../../components/ui/input";
-import SubmitButton from "../SubmitButton";
-import ReferralCodeUI from "../ReferralCodeUI";
+import AuthTemplate from "../../components/AuthCardTemplate";
+import SubmitButton from "@/components/SubmitButton";
+import ReferralCodeUI from "./ReferralCodeUI";
+
 
 export type SignupMarketerFormProps = {
   form: UseFormReturn<SignupMarketingFormValues>;
@@ -330,7 +331,11 @@ export default function SignupMarketerForm({
                   type="button"
                   aria-label="proceed"
                   onClick={handleNext}
-                  className={`${step < totalSteps && step !== 3 ? 'flex-1 bg-[#EE9F05] hover:bg-[#b89e6a] h-12 mt-3 transition-transform duration-500 ease-out' : 'hidden'}`}
+                  className={`${
+                    step < totalSteps && step !== 3
+                      ? "flex-1 bg-[#EE9F05] hover:bg-[#b89e6a] h-12 mt-3 transition-transform duration-500 ease-out"
+                      : "hidden"
+                  }`}
                 >
                   Proceed
                 </Button>

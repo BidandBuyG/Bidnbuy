@@ -4,8 +4,9 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 // Mock axios to avoid import.meta usage during Jest runs
-jest.mock("../../lib/axios", () => ({
+jest.mock("../../../lib/axios", () => ({
   __esModule: true,
   default: {
     post: jest.fn(),
@@ -13,8 +14,8 @@ jest.mock("../../lib/axios", () => ({
   },
 }));
 
-import MarketerSignup from "../../marketing/pages/Signup";
-import * as authService from "../../services/auth";
+import MarketerSignup from "../pages/Signup";
+import * as authService from "../../../services/auth";
 import { toast } from "sonner";
 
 jest.mock("sonner", () => ({
@@ -41,7 +42,10 @@ const createWrapper = (ui: React.ReactElement) => {
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
           <Route path="/" element={ui} />
-          <Route path="/marketing/referrals" element={<div>Referrals Page</div>} />
+          <Route
+            path="/marketing/referrals"
+            element={<div>Referrals Page</div>}
+          />
         </Routes>
       </MemoryRouter>
     </QueryClientProvider>
@@ -141,7 +145,10 @@ describe("MarketingSignup", () => {
   });
 
   it("displays referral code and link on success", async () => {
-    const referral = { referralCode: "ABC123", referralLink: "https://example.com/ref/ABC123" };
+    const referral = {
+      referralCode: "ABC123",
+      referralLink: "https://example.com/ref/ABC123",
+    };
 
     const signupSpy = jest
       .spyOn(authService.authService, "signupMarketer")
@@ -149,7 +156,12 @@ describe("MarketingSignup", () => {
         success: true,
         message: "ok",
         token: "t",
-        user: { id: "u1", email: "john@example.com", name: "John", role: "customer" },
+        user: {
+          id: "u1",
+          email: "john@example.com",
+          name: "John",
+          role: "customer",
+        },
       });
 
     const referralSpy = jest
@@ -165,7 +177,9 @@ describe("MarketingSignup", () => {
     submitFinal();
 
     // Step 4 UI visible with referral code split in two parts
-    expect(await screen.findByText(/proceed to dashboard/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/proceed to dashboard/i)
+    ).toBeInTheDocument();
     expect(screen.getByText("ABC")).toBeInTheDocument();
     expect(screen.getByText("123")).toBeInTheDocument();
 

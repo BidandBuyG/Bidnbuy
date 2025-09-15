@@ -3,14 +3,14 @@ import type { UseFormReturn } from "react-hook-form";
 import { Form } from "../../../components/ui/form";
 import { useEffect, useState } from "react";
 import AuthTemplate from "../AuthCardTemplate";
-import SubmitButton from "../SubmitButton";
 import { Button } from "../../../components/ui/button";
-import { getSlideClass } from "../../lib/utils";
-import EmailField from "../inputs/EmailField";
-import PasswordField from "../inputs/PasswordField";
-import type { LoginFormValues } from "../../lib/validations/auth";
-import Twitter from "../../assets/x.png";
-import Google from "../../assets/google.png";
+import { getSlideClass } from "../../../lib/utils";
+import EmailField from "../../../components/inputs/EmailField";
+import PasswordField from "../../../components/inputs/PasswordField";
+import type { LoginFormValues } from "../../../lib/validations/auth";
+import Twitter from "../../../assets/x.png";
+import Google from "../../../assets/google.png";
+import SubmitButton from "@/components/SubmitButton";
 
 interface LoginFormProps {
   form: UseFormReturn<LoginFormValues>;
@@ -35,7 +35,7 @@ export default function LoginForm({
     // Immediately set initial slide (offscreen)
     setSlideIn(false);
     // Then slide in after a tick
-    const slideTimer = setTimeout(() => setSlideIn(true), 50); 
+    const slideTimer = setTimeout(() => setSlideIn(true), 50);
     const shakeTimer = setTimeout(() => setShowFieldsShake(true), 500);
     return () => {
       clearTimeout(slideTimer);

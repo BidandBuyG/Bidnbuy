@@ -4,9 +4,10 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Login from "../pages/Login";
-import * as authService from "../../services/auth";
+import * as authService from "../../../services/auth";
 import { toast } from "sonner";
-import { jest } from '@jest/globals';
+import { jest } from "@jest/globals";
+
 
 jest.mock("sonner", () => ({
   toast: {
@@ -16,8 +17,8 @@ jest.mock("sonner", () => ({
 }));
 
 // Mock image assets used by LoginForm
-jest.mock("../../assets/google.png", () => "google.png");
-jest.mock("../../assets/x.png", () => "x.png");
+jest.mock("../../../assets/google.png", () => "google.png");
+jest.mock("../../../assets/x.png", () => "x.png");
 
 // Helper to override the exported authService for tests
 const setAuthServiceMock = (impl: any) => {
@@ -37,14 +38,20 @@ const createWrapper = (ui: React.ReactElement, route = "/login") => {
       <MemoryRouter initialEntries={[route]}>
         <Routes>
           <Route path="/login" element={ui} />
-          <Route path="/marketing/referrals" element={<div>Referrals Page</div>} />
+          <Route
+            path="/marketing/referrals"
+            element={<div>Referrals Page</div>}
+          />
         </Routes>
       </MemoryRouter>
     </QueryClientProvider>
   );
 };
 
-const fillAndSubmit = async (email = "user@example.com", password = "secret1") => {
+const fillAndSubmit = async (
+  email = "user@example.com",
+  password = "secret1"
+) => {
   const emailInput = screen.getByPlaceholderText(/enter your email/i);
   const passwordInput = screen.getByPlaceholderText(/enter your password/i);
   fireEvent.change(emailInput, { target: { value: email } });
@@ -65,7 +72,9 @@ describe("LoginForm", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /login/i }));
 
-    expect(await screen.findByText(/invalid email address/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/invalid email address/i)
+    ).toBeInTheDocument();
     expect(
       await screen.findByText(/password must be at least 6 characters/i)
     ).toBeInTheDocument();
@@ -83,10 +92,22 @@ describe("LoginForm", () => {
 
     await fillAndSubmit();
 
-    const loadingBtn = await screen.findByRole("button", { name: /logging in/i });
+    const loadingBtn = await screen.findByRole("button", {
+      name: /logging in/i,
+    });
     expect(loadingBtn).toBeDisabled();
 
-    (resolveLogin as any)({ success: true, message: "ok", user: { id: "1", email: "user@example.com", name: "User", phoneNumber: "123", role: "customer" } });
+    (resolveLogin as any)({
+      success: true,
+      message: "ok",
+      user: {
+        id: "1",
+        email: "user@example.com",
+        name: "User",
+        phoneNumber: "123",
+        role: "customer",
+      },
+    });
   });
 
   test("shows API error on 401", async () => {
@@ -101,12 +122,30 @@ describe("LoginForm", () => {
     await fillAndSubmit();
 
     await waitFor(() => {
-      expect((toast.error as jest.Mock).mock.calls.some((c) => /invalid credentials/i.test(String(c[0])))).toBe(true);
+      expect(
+        (toast.error as jest.Mock).mock.calls.some((c) =>
+          /invalid credentials/i.test(String(c[0]))
+        )
+      ).toBe(true);
     });
   });
 
   test("saves token and redirects on success", async () => {
-    setAuthServiceMock({ login: jest.fn(() => Promise.resolve({ success: true, message: "ok", user: { id: "1", email: "user@example.com", name: "User", phoneNumber: "123", role: "vendor" } })) } as any);
+    setAuthServiceMock({
+      login: jest.fn(() =>
+        Promise.resolve({
+          success: true,
+          message: "ok",
+          user: {
+            id: "1",
+            email: "user@example.com",
+            name: "User",
+            phoneNumber: "123",
+            role: "vendor",
+          },
+        })
+      ),
+    } as any);
 
     createWrapper(<Login />);
 

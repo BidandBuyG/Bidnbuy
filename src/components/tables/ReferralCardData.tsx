@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Phone, User } from "lucide-react";
 import React from "react";
-import MailIcon from "../../features/assets/email.svg";
+import MailIcon from "../../assets/email.svg";
 
 type ReferralCardProps = {
   ref: any;

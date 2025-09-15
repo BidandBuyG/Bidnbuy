@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import ReferralImg from "../assets/referral.png";
-import { Button } from "../../components/ui/button";
+import ReferralImg from "../../../assets/referral.png";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function ReferralCodeUI({ result }: { result?: any }) {
   const navigate = useNavigate();

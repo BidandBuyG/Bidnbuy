@@ -1,17 +1,15 @@
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search, Filter, ArrowUpDown } from "lucide-react"
+import { Card } from "@/src/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, Filter, ArrowUpDown } from "lucide-react";
 
-import { copyReferralLink } from "@/lib/copy-referral-link"
+import { copyReferralLink } from "@/lib/copy-referral-link";
 
 type EmptyReferralsProps = {
-  referralLink: string
-}
+  referralLink: string;
+};
 
 const EmptyReferrals = ({ referralLink }: EmptyReferralsProps) => {
-  
-
   return (
     <div className="space-y-4">
       {/* Search and Filters */}
@@ -53,22 +51,29 @@ const EmptyReferrals = ({ referralLink }: EmptyReferralsProps) => {
       {/* Empty State */}
       <div className="text-center py-12">
         <div className="mb-6">
-          <h3 className="text-xl font-semibold text-white mb-2">No referrals yet.</h3>
+          <h3 className="text-xl font-semibold text-white mb-2">
+            No referrals yet.
+          </h3>
           <p className="text-teal-200">Share your link to get started.</p>
         </div>
 
         <Card className="p-4 bg-[#00222E] border-[#00707B]/50 max-w-md mx-auto">
           <div className="flex items-center justify-between">
-            <span className="text-teal-200 text-sm truncate mr-3">{referralLink}</span>
-            <Button onClick={() => copyReferralLink(referralLink)} size="sm" className="bg-teal-600 hover:bg-teal-500 text-white">
+            <span className="text-teal-200 text-sm truncate mr-3">
+              {referralLink}
+            </span>
+            <Button
+              onClick={() => copyReferralLink(referralLink)}
+              size="sm"
+              className="bg-teal-600 hover:bg-teal-500 text-white"
+            >
               Copy link
             </Button>
           </div>
         </Card>
       </div>
     </div>
-  )
-}
-
+  );
+};
 
 export default EmptyReferrals;

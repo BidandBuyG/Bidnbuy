@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./app/App";
 import "./App.css";
 import { Toaster as SonnerToaster } from "sonner";
-import { HealthBadge } from "./features/components/HealthBadge";
-import TanstackProvider from "./features/components/providers/tanstack-provider";
+import { HealthBadge } from "./components/HealthBadge";
+import TanstackProvider from "./components/providers/tanstack-provider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

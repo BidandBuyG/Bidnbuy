@@ -2,15 +2,10 @@
 "use client";
 import * as React from "react";
 import type { Control, FieldValues, Path } from "react-hook-form";
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-} from "../../../components/ui/form";
+import { FormField, FormItem, FormControl, FormMessage } from "../ui/form";
 import { useFormContext } from "react-hook-form";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { Eye, EyeClosed } from "lucide-react";
 import PasswordIcon from "../../assets/password.svg";
 

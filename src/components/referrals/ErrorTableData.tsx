@@ -3,8 +3,8 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import TableIcon from "../../features/assets/table-tab-icon.svg";
-import CardIcon from "../../features/assets/card-tab-icon.svg";
+import TableIcon from "../../assets/table-tab-icon.svg";
+import CardIcon from "../../assets/card-tab-icon.svg";
 import { ErrorPlaceholder } from "../ErrorPlaceholder";
 
 interface ReferralErrorStateProps {

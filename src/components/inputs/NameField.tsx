@@ -1,12 +1,7 @@
 "use client";
 import { Control, FieldValues, Path } from "react-hook-form";
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-} from "../../../components/ui/form";
-import { Input } from "../../../components/ui/input";
+import { FormField, FormItem, FormControl, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
 import { UserRound } from "lucide-react";
 
 type Props<T extends FieldValues> = {

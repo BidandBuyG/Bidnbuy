@@ -1,5 +1,5 @@
-import { Card } from "@/src/components/ui/card";
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useMarketingStore } from "@/store/marketing-store";
 
 type MarketingStatsProps = {

@@ -1,65 +1,78 @@
-import { useState } from "react"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Search, Filter, ArrowUpDown } from "lucide-react"
-import { useMarketingStore } from "@/store/marketing-store"
-import { toast } from "sonner"
+import { useState } from "react";
+import { Card } from "@/src/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Search, Filter, ArrowUpDown } from "lucide-react";
+import { useMarketingStore } from "@/store/marketing-store";
+import { toast } from "sonner";
 
 export function ReferralsTable() {
-  const { referrals, referralLink } = useMarketingStore()
-  const [searchTerm, setSearchTerm] = useState("")
-  const [sortBy, setSortBy] = useState<"name" | "date" | "status">("date")
-  const [filterBy, setFilterBy] = useState<"all" | "buyer" | "vendor" | "rewarded" | "pending">("all")
+  const { referrals, referralLink } = useMarketingStore();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<"name" | "date" | "status">("date");
+  const [filterBy, setFilterBy] = useState<
+    "all" | "buyer" | "vendor" | "rewarded" | "pending"
+  >("all");
 
   const filteredReferrals = referrals
     .filter((referral) => {
       const matchesSearch =
         referral.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         referral.phone.includes(searchTerm) ||
-        referral.email.toLowerCase().includes(searchTerm.toLowerCase())
+        referral.email.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesFilter = filterBy === "all" || referral.type === filterBy || referral.status === filterBy
+      const matchesFilter =
+        filterBy === "all" ||
+        referral.type === filterBy ||
+        referral.status === filterBy;
 
-      return matchesSearch && matchesFilter
+      return matchesSearch && matchesFilter;
     })
     .sort((a, b) => {
       switch (sortBy) {
         case "name":
-          return a.name.localeCompare(b.name)
+          return a.name.localeCompare(b.name);
         case "date":
-          return new Date(b.date).getTime() - new Date(a.date).getTime()
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
         case "status":
-          return a.status.localeCompare(b.status)
+          return a.status.localeCompare(b.status);
         default:
-          return 0
+          return 0;
       }
-    })
+    });
 
   const copyReferralLink = () => {
-    navigator.clipboard.writeText(`https://${referralLink}`)
-    toast.success("Referral link copied to clipboard!")
-  }
+    navigator.clipboard.writeText(`https://${referralLink}`);
+    toast.success("Referral link copied to clipboard!");
+  };
 
   if (referrals.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="mb-6">
-          <h3 className="text-xl font-semibold text-white mb-2">No referrals yet.</h3>
+          <h3 className="text-xl font-semibold text-white mb-2">
+            No referrals yet.
+          </h3>
           <p className="text-white">Share your link to get started.</p>
         </div>
 
         <Card className="p-4 bg-[#00222E] border-teal-600/50 max-w-md mx-auto">
           <div className="flex items-center justify-between">
-            <span className="text-white text-sm truncate mr-3">{referralLink}</span>
-            <Button onClick={copyReferralLink} size="sm" className="bg-teal-600 hover:bg-teal-500 text-white">
+            <span className="text-white text-sm truncate mr-3">
+              {referralLink}
+            </span>
+            <Button
+              onClick={copyReferralLink}
+              size="sm"
+              className="bg-teal-600 hover:bg-teal-500 text-white"
+            >
               Copy link
             </Button>
           </div>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -109,10 +122,14 @@ export function ReferralsTable() {
               <thead>
                 <tr className="border-b border-[#00707B]">
                   <th className="text-left p-4 text-white font-medium">Name</th>
-                  <th className="text-left p-4 text-white font-medium">Phone</th>
+                  <th className="text-left p-4 text-white font-medium">
+                    Phone
+                  </th>
                   <th className="text-left p-4 text-white font-medium">Type</th>
                   <th className="text-left p-4 text-white font-medium">Date</th>
-                  <th className="text-left p-4 text-white font-medium">Status</th>
+                  <th className="text-left p-4 text-white font-medium">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -122,8 +139,14 @@ export function ReferralsTable() {
                     <td className="p-4 text-white">{referral.phone}</td>
                     <td className="p-4">
                       <Badge
-                        variant={referral.type === "buyer" ? "default" : "secondary"}
-                        className={referral.type === "buyer" ? "bg-blue-600 text-white" : "bg-purple-600 text-white"}
+                        variant={
+                          referral.type === "buyer" ? "default" : "secondary"
+                        }
+                        className={
+                          referral.type === "buyer"
+                            ? "bg-blue-600 text-white"
+                            : "bg-purple-600 text-white"
+                        }
                       >
                         {referral.type}
                       </Badge>
@@ -131,9 +154,15 @@ export function ReferralsTable() {
                     <td className="p-4 text-white">{referral.date}</td>
                     <td className="p-4">
                       <Badge
-                        variant={referral.status === "rewarded" ? "default" : "secondary"}
+                        variant={
+                          referral.status === "rewarded"
+                            ? "default"
+                            : "secondary"
+                        }
                         className={
-                          referral.status === "rewarded" ? "bg-green-600 text-white" : "bg-yellow-600 text-white"
+                          referral.status === "rewarded"
+                            ? "bg-green-600 text-white"
+                            : "bg-yellow-600 text-white"
                         }
                       >
                         {referral.status}
@@ -155,8 +184,14 @@ export function ReferralsTable() {
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-white">{referral.name}</h3>
                 <Badge
-                  variant={referral.status === "rewarded" ? "default" : "secondary"}
-                  className={referral.status === "rewarded" ? "bg-green-600 text-white" : "bg-yellow-600 text-white"}
+                  variant={
+                    referral.status === "rewarded" ? "default" : "secondary"
+                  }
+                  className={
+                    referral.status === "rewarded"
+                      ? "bg-green-600 text-white"
+                      : "bg-yellow-600 text-white"
+                  }
                 >
                   {referral.status}
                 </Badge>
@@ -170,7 +205,11 @@ export function ReferralsTable() {
               <div className="flex items-center justify-between">
                 <Badge
                   variant={referral.type === "buyer" ? "default" : "secondary"}
-                  className={referral.type === "buyer" ? "bg-blue-600 text-white" : "bg-purple-600 text-white"}
+                  className={
+                    referral.type === "buyer"
+                      ? "bg-blue-600 text-white"
+                      : "bg-purple-600 text-white"
+                  }
                 >
                   {referral.type}
                 </Badge>
@@ -181,5 +220,5 @@ export function ReferralsTable() {
         ))}
       </div>
     </div>
-  )
+  );
 }

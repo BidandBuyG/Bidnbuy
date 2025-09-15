@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseFormReturn } from "react-hook-form";
 import { useEffect, useState } from "react";
-import AuthTemplate from "../AuthCardTemplate";
 import { Button } from "../../../components/ui/button";
-import { getSlideClass } from "../../lib/utils";
+import { getSlideClass } from "../../../lib/utils";
 import { Form } from "../../../components/ui/form";
-import type { ChangePasswordFormValues } from "../../lib/validations/auth";
-import PasswordField from "../inputs/PasswordField";
+import type { ChangePasswordFormValues } from "../../../lib/validations/auth";
+import PasswordField from "../../../components/inputs/PasswordField";
 import { ArrowLeft } from "lucide-react";
-import PasswordSuccessImage from "../../assets/password-success.png";
+import PasswordSuccessImage from "../../../assets/password-success.png";
+import AuthTemplate from "../AuthCardTemplate";
 
 interface LoginFormProps {
   form: UseFormReturn<ChangePasswordFormValues>;

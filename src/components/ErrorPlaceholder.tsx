@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
-import { cn } from "../features/lib/utils";
+import { cn } from "@/lib/utils";
 
 const Icons = {
   // Example icon, replace or add more as needed

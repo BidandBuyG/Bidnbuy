@@ -1,41 +1,55 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { Share2 } from "lucide-react"
+import { Share2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import PromoteAuctionModal from "./PromoteAuctionModal"
-import { Card } from "@/components/ui/card"
-
+import { Button } from "@/components/ui/button";
+import PromoteAuctionModal from "./PromoteAuctionModal";
+import { Card } from "@/src/components/ui/card";
 
 type AuctionItemProps = {
-  id: string
-  title: string
-  image: string
-  currentBid: string
-  timeLeft: Date
-  onJoinBid: (id: string) => void
-}
+  id: string;
+  title: string;
+  image: string;
+  currentBid: string;
+  timeLeft: Date;
+  onJoinBid: (id: string) => void;
+};
 
-export function AuctionItem({ id, title, image, currentBid, timeLeft, onJoinBid }: AuctionItemProps) {
-  const [showPromoteModal, setShowPromoteModal] = useState(false)
+export function AuctionItem({
+  id,
+  title,
+  image,
+  currentBid,
+  timeLeft,
+  onJoinBid,
+}: AuctionItemProps) {
+  const [showPromoteModal, setShowPromoteModal] = useState(false);
 
   return (
     <>
       <Card key={id} className="p-4 bg-[#00222E] border-[#00707B]">
         <div className="flex items-center gap-4">
-          
           {/* Product Image */}
           <div className="w-16 h-16 md:w-20 md:h-20 relative flex-shrink-0 rounded-lg overflow-hidden">
-            <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
+            <img
+              src={image || "/placeholder.svg"}
+              alt={title}
+              className="w-full h-full object-cover"
+            />
           </div>
 
           {/* Product Info */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-white font-medium text-sm md:text-base mb-1 truncate">{title}</h3>
+            <h3 className="text-white font-medium text-sm md:text-base mb-1 truncate">
+              {title}
+            </h3>
             <p className="text-slate-300 text-xs md:text-sm mb-1">
-              Current Bid: <span className="text-teal-400 font-medium">{currentBid}</span>
+              Current Bid:{" "}
+              <span className="text-teal-400 font-medium">{currentBid}</span>
             </p>
-            <p className="text-slate-400 text-xs">Time Left: {timeLeft.toLocaleTimeString()}</p>
+            <p className="text-slate-400 text-xs">
+              Time Left: {timeLeft.toLocaleTimeString()}
+            </p>
           </div>
 
           {/* Action Buttons */}
@@ -66,5 +80,5 @@ export function AuctionItem({ id, title, image, currentBid, timeLeft, onJoinBid 
         auctionTitle={title}
       />
     </>
-  )
+  );
 }

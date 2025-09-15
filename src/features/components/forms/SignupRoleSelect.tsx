@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import AuthTemplate from "../AuthCardTemplate";
-import { getSlideClass } from "../../lib/utils";
-import VendorImage from "../../../features/assets/vendor.png";
-import MarketerImage from "../../../features/assets/affiliate.png";
-import Customer from "../../../features/assets/customer.png";
+import { getSlideClass } from "../../../lib/utils";
+import VendorImage from "../../../assets/vendor.png";
+import MarketerImage from "../../..//assets/affiliate.png";
+import Customer from "../../../assets/customer.png";
 import { Button } from "../../../components/ui/button";
 
 interface LoginFormProps {

@@ -3,9 +3,9 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import EmptyStateImage from "../../features/assets/emptyImg.png";
-import TableIcon from "../../features/assets/table-tab-icon.svg";
-import CardIcon from "../../features/assets/card-tab-icon.svg";
+import EmptyStateImage from "../../assets/emptyImg.png";
+import TableIcon from "../../assets/table-tab-icon.svg";
+import CardIcon from "../../assets/card-tab-icon.svg";
 
 interface ReferralEmptyStateProps {
   setOpenAddUser: (open: boolean) => void;

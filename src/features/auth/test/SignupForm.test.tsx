@@ -5,9 +5,9 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Signup from "../pages/Signup";
-import * as authService from "../../services/auth";
+import * as authService from "../../../services/auth";
 import { toast } from "sonner";
-import axiosInstance from "../../lib/axios";
+import axiosInstance from "../../../lib/axios";
 
 jest.mock("sonner", () => ({
   toast: {

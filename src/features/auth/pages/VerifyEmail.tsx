@@ -3,13 +3,13 @@
 import {
   PasswordOtpFormValues,
   passwordOtpSchema,
-} from "../../lib/validations/auth";
-import { authService } from "../../services/auth";
+} from "../../../lib/validations/auth";
+import { authService } from "../../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthMutation } from "../../hooks/useAuthMutation";
-import { ErrorToast, SuccessToast } from "../../components/Toasts";
+import { useAuthMutation } from "../../../hooks/useAuthMutation";
+import { ErrorToast, SuccessToast } from "../../../components/Toasts";
 import ForgotOtpForm from "../../components/forms/PasswordOtpForm";
 
 export default function VerifyEmail() {
@@ -26,7 +26,7 @@ export default function VerifyEmail() {
 
   const loginMutation = useAuthMutation<
     PasswordOtpFormValues,
-    import("../../services/auth").AuthResponse
+    import("../../../services/auth").AuthResponse
   >(authService.verifyOtpFunc, {
     onSuccess: (data) => {
       try {

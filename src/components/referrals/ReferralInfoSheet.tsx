@@ -17,13 +17,13 @@ import {
   FormMessage,
 } from "../ui/form";
 import { CustomToast } from "../CustomToast";
-import SucessImg from "../../features/assets/sucessUser.png";
+import SucessImg from "../../assets/sucessUser.png";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { FormSchema } from "./AddUserSheet";
-import NameIcon from "../../features/assets/nameicon.png";
-import EmailIcon from "../../features/assets/email.svg";
+import NameIcon from "../../assets/nameicon.png";
+import EmailIcon from "../../assets/email.svg";
 import { Input } from "../ui/input";
 import {
   Select,

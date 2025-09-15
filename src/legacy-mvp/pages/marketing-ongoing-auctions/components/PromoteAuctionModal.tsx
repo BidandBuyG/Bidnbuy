@@ -4,22 +4,27 @@ import { toast } from "sonner";
 import { Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { FaWhatsapp, FaFacebookF, FaInstagram, FaTwitter, FaTiktok } from "react-icons/fa";
+import {
+  FaWhatsapp,
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaTiktok,
+} from "react-icons/fa";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Card } from "@/components/ui/card";
-
+import { Card } from "@/src/components/ui/card";
 
 type PromoteAuctionModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   auctionId: string;
   auctionTitle: string;
-}
+};
 
 const PromoteAuctionModal = ({
   open,
@@ -69,7 +74,9 @@ const PromoteAuctionModal = ({
       color: "bg-blue-600",
       action: () => {
         window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`,
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            referralLink
+          )}`,
           "_blank"
         );
       },
@@ -99,23 +106,24 @@ const PromoteAuctionModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent aria-describedby={undefined} className="bg-[#00222E] border-[#00707B]/50 text-white max-w-sm mx-auto">
+      <DialogContent
+        aria-describedby={undefined}
+        className="bg-[#00222E] border-[#00707B]/50 text-white max-w-sm mx-auto"
+      >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <DialogTitle className="text-lg font-medium">
             Promote Auction
           </DialogTitle>
-         
         </DialogHeader>
 
         <div className="space-y-6">
-
           {/* Referral Link */}
-
 
           <Card className="space-y-2 p-4 bg-[#00222E] border-[#00707B]/50 max-w-md mx-auto">
             <div className="flex items-center justify-between gap-2">
-              
-              <span className="text-teal-200 text-sm truncate mr-3">{referralLink}</span>
+              <span className="text-teal-200 text-sm truncate mr-3">
+                {referralLink}
+              </span>
               <Button
                 onClick={handleCopyLink}
                 size="sm"
@@ -157,6 +165,6 @@ const PromoteAuctionModal = ({
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default PromoteAuctionModal;

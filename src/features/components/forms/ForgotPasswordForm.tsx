@@ -4,9 +4,9 @@ import { Form } from "../../../components/ui/form";
 import { useEffect, useState } from "react";
 import AuthTemplate from "../AuthCardTemplate";
 import { Button } from "../../../components/ui/button";
-import { getSlideClass } from "../../lib/utils";
-import EmailField from "../inputs/EmailField";
-import type { ForgotPasswordFormValues } from "../../lib/validations/auth";
+import { getSlideClass } from "../../../lib/utils";
+import EmailField from "../../../components/inputs/EmailField";
+import type { ForgotPasswordFormValues } from "../../../lib/validations/auth";
 import { ArrowLeft } from "lucide-react";
 
 interface LoginFormProps {
@@ -48,10 +48,7 @@ export default function ForgotPasswordForm({
       footer={
         <div className="flex items-center justify-center gap-2">
           <ArrowLeft className="mt-1" />
-          <a
-            href="/login"
-            className="text-[#EE9F05] hover:text-[#b89e6a]"
-          >
+          <a href="/login" className="text-[#EE9F05] hover:text-[#b89e6a]">
             {" "}
             Back to login
           </a>

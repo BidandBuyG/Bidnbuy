@@ -3,13 +3,13 @@
 import {
   ForgotPasswordFormValues,
   forgotPasswordSchema,
-} from "../../lib/validations/auth";
-import { authService } from "../../services/auth";
+} from "../../../lib/validations/auth";
+import { authService } from "../../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthMutation } from "../../hooks/useAuthMutation";
-import { ErrorToast, SuccessToast } from "../../components/Toasts";
+import { useAuthMutation } from "../../../hooks/useAuthMutation";
+import { ErrorToast, SuccessToast } from "../../../components/Toasts";
 import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
 
 export default function ForgotPassword() {
@@ -26,7 +26,7 @@ export default function ForgotPassword() {
 
   const loginMutation = useAuthMutation<
     ForgotPasswordFormValues,
-    import("../../services/auth").AuthResponse
+    import("../../../services/auth").AuthResponse
   >(authService.verifyEmail, {
     onSuccess: (data) => {
       try {

@@ -6,9 +6,9 @@ import {
   SheetTitle,
 } from "../../components/ui/sheet";
 import { Separator } from "../ui/separator";
-import AddUserImg from "../../features/assets/addUser.png";
-import NameIcon from "../../features/assets/nameicon.png";
-import EmailIcon from "../../features/assets/email.svg";
+import AddUserImg from "../../assets/addUser.png";
+import NameIcon from "../../assets/nameicon.png";
+import EmailIcon from "../../assets/email.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,7 +31,7 @@ import {
 } from "../ui/select";
 import { ScrollArea } from "../ui/scroll-area";
 import { CustomToast } from "../CustomToast";
-import SucessImg from "../../features/assets/sucessUser.png";
+import SucessImg from "../../assets/sucessUser.png";
 
 export type ReferralInfo = {
   id: string;

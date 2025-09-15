@@ -9,16 +9,16 @@ import {
 } from "../../../components/ui/form";
 import { useEffect, useState } from "react";
 import AuthTemplate from "../AuthCardTemplate";
-import SubmitButton from "../SubmitButton";
 import { Button } from "../../../components/ui/button";
-import { getSlideClass } from "../../lib/utils";
-import EmailField from "../inputs/EmailField";
-import PasswordField from "../inputs/PasswordField";
-import { SignupFormValues } from "../../lib/validations/auth";
-import NameField from "../inputs/NameField";
-import Twitter from "../../assets/x.png";
-import Google from "../../assets/google.png";
+import { getSlideClass } from "../../../lib/utils";
+import EmailField from "../../../components/inputs/EmailField";
+import PasswordField from "../../../components/inputs/PasswordField";
+import { SignupFormValues } from "../../../lib/validations/auth";
+import NameField from "../../../components/inputs/NameField";
+import Twitter from "../../../assets/x.png";
+import Google from "../../../assets/google.png";
 import { Checkbox } from "../../../components/ui/checkbox";
+import SubmitButton from "@/components/SubmitButton";
 
 export type SignupFormProps = {
   form: UseFormReturn<SignupFormValues>;

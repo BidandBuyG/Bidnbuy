@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import type { Control, FieldValues, Path } from "react-hook-form";
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-} from "../../../components/ui/form";
+import { FormField, FormItem, FormControl, FormMessage } from "../ui/form";
 import { useFormContext } from "react-hook-form";
-import { Input } from "../../../components/ui/input";
+import { Input } from "../ui/input";
 import EmailIcon from "../../assets/email.svg";
 
 type Props<T extends FieldValues> = {

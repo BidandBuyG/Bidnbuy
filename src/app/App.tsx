@@ -10,6 +10,7 @@ import SignUpRoleSelect from "../features/components/forms/SignupRoleSelect";
 import ForgotPassword from "../features/auth/pages/ForgotPassword";
 import VerifyEmail from "../features/auth/pages/VerifyEmail";
 import ChangePassword from "../features/auth/pages/ChangePassword";
+import Metrics from "../features/marketing/pages/Metrics";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />{" "}
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<ChangePassword />} />
+        <Route path="/marketing/metrics" element={<Metrics />} />
         {/* Joshua’s work */}
         <Route path="/wallet/overview" element={<WalletOverview />} />
         <Route path="/wallet/transactions" element={<WalletTransactions />} />

@@ -4,8 +4,8 @@ import { DataTable } from "./data-table";
 import { Plus } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { useState } from "react";
-import TableIcon from "../../features/assets/table-tab-icon.svg";
-import CardIcon from "../../features/assets/card-tab-icon.svg";
+import TableIcon from "../../assets/table-tab-icon.svg";
+import CardIcon from "../../assets/card-tab-icon.svg";
 import ReferralInfoSheet from "../referrals/ReferralInfoSheet";
 import { AddReferralSheet } from "../referrals/AddUserSheet";
 import { TableSkeleton } from "./TableSkeleton";
@@ -31,6 +31,13 @@ interface Props {
   isError?: boolean;
   errorMessage?: string;
   onRetry?: () => void;
+
+  page: number;
+  limit: number;
+  query: string;
+  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
+  onQueryChange: (query: string) => void;
 }
 
 export const ReferralTable = ({
@@ -40,6 +47,12 @@ export const ReferralTable = ({
   isError = false,
   errorMessage,
   onRetry,
+  page,
+  limit,
+  query,
+  onPageChange,
+  onLimitChange,
+  onQueryChange,
 }: Props) => {
   const [view, setView] = useState<"table" | "card">("table");
   const [openAddUser, setOpenAddUser] = useState(false);
@@ -145,6 +158,12 @@ export const ReferralTable = ({
                           </div>
                         ) : undefined
                       }
+                      page={page}
+                      limit={limit}
+                      query={query}
+                      onPageChange={onPageChange}
+                      onLimitChange={onLimitChange}
+                      onQueryChange={onQueryChange}
                     />
                   </>
                 ) : (

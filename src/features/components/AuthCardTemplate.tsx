@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getSlideClass } from "../lib/utils";
-import Img1 from "@/features/assets/Onboarding-slide-1.png";
-import Img2 from "@/features/assets/Onboarding-slide-2.png";
-import Img3 from "@/features/assets/Onboarding-slide-3.png";
-import Logo from "@/features/assets/bidnbuy-logo-2.png";
-import ImageCarousel from "./ImageSlider";
+import Img1 from "../../assets/Onboarding-slide-1.png";
+import Img2 from "../../assets/Onboarding-slide-2.png";
+import Img3 from "../../assets/Onboarding-slide-3.png";
+import Logo from "../../assets/bidnbuy-logo-2.png";
+import { getSlideClass } from "@/lib/utils";
+import ImageCarousel from "@/components/ImageSlider";
 
 interface AuthTemplateProps {
   title: string;

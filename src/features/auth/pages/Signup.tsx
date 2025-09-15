@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { authService } from "../../services/auth";
+import { authService } from "../../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthMutation } from "../../hooks/useAuthMutation";
+import { useAuthMutation } from "../../../hooks/useAuthMutation";
 import SignupForm from "../../components/forms/SignupForm";
-import { SignupFormValues, signupSchema } from "../../lib/validations/auth";
-import { ErrorToast, SuccessToast } from "../../components/Toasts";
+import { SignupFormValues, signupSchema } from "../../../lib/validations/auth";
+import { ErrorToast, SuccessToast } from "../../../components/Toasts";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Signup() {
 
   const signupMutation = useAuthMutation<
     SignupFormValues,
-    import("../../services/auth").AuthResponse
+    import("../../../services/auth").AuthResponse
   >(
     async (values) => {
       return await authService.signup({

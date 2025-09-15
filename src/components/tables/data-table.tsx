@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { JSX, useState, useEffect } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Button } from "../ui/button";
+import { useDebounce } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -30,20 +31,43 @@ interface DataTableProps<TData, TValue> {
   externalTabs?: JSX.Element;
   hideTableBody?: boolean;
   customContent?: JSX.Element;
+
+  page: number;
+  limit: number;
+  query: string;
+  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
+  onQueryChange: (query: string) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchKey,
+  // searchKey,
   header,
   button,
   externalTabs,
   hideTableBody,
   customContent,
+  page,
+  limit,
+  query,
+  onPageChange,
+  onLimitChange,
+  onQueryChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const [localQuery, setLocalQuery] = useState(query);
+  const debouncedQuery = useDebounce(localQuery);
+
+  // 🔄 Sync debounced value to parent
+  useEffect(() => {
+    if (debouncedQuery !== query) {
+      onQueryChange(debouncedQuery);
+    }
+  }, [debouncedQuery]);
 
   const table = useReactTable({
     data,
@@ -78,15 +102,8 @@ export function DataTable<TData, TValue>({
                 <Search className="h-4 w-4 absolute top-3 left-3 text-white" />
                 <Input
                   placeholder="Search"
-                  value={
-                    (table.getColumn(searchKey)?.getFilterValue() as string) ??
-                    ""
-                  }
-                  onChange={(event) =>
-                    table
-                      .getColumn(searchKey)
-                      ?.setFilterValue(event.target.value)
-                  }
+                  value={localQuery}
+                  onChange={(e) => setLocalQuery(e.target.value)}
                   className="placeholder:text-white placeholder-opacity-100 max-w-lg w-lg pl-9 h-10 focus-visible:border-none border-[#002129] bg-[#002129] text-white"
                 />
               </div>
@@ -161,32 +178,50 @@ export function DataTable<TData, TValue>({
         </div>
       )}
 
-      <div className="flex items-center justify-end space-x-2 pt-5">
-        <div className="w-[100px] text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
+      {/* Pagination + Page Size */}
+      <div className="flex items-center justify-between pt-5">
+        <div className="flex items-center gap-2 text-sm">
+          <label htmlFor="page-size" className="font-medium">
+            Show:
+          </label>
+          <select
+            id="page-size"
+            value={limit}
+            onChange={(e) => onLimitChange(Number(e.target.value))}
+            className="bg-[#002129] text-white rounded px-2 py-1"
+          >
+            {[10, 25, 50].map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="space-x-2">
+
+        <div className="flex items-center gap-2 text-sm">
+          <span>Page {page}</span>
           <Button
-            className="bg-[#007F93] hover:bg-[#1892a5] text-white border-none"
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => onPageChange(page - 1)}
+            disabled={page <= 1}
+            className="bg-[#007F93] hover:bg-[#1892a5] text-white px-3 py-1 rounded disabled:opacity-50"
           >
             Previous
           </Button>
-          <Button
-            className="bg-[#007F93] hover:bg-[#1892a5] text-white border-none"
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+          <button
+            onClick={() => onPageChange(page + 1)}
+            className="bg-[#007F93] hover:bg-[#1892a5] text-white px-3 py-1 rounded"
           >
             Next
-          </Button>
+          </button>
         </div>
       </div>
+
+      {/* Empty state */}
+      {data.length === 0 && (
+        <div className="text-center text-lg font-semibold mt-8">
+          {query ? "No results match your search." : "No referrals yet."}
+        </div>
+      )}
     </>
   );
 }

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
+import { useAuthStore } from '../store/auth';
 
 const baseURL = (typeof process !== 'undefined' && (process.env?.VITE_API_URL as string)) || (globalThis as any).__VITE_API_URL || "";
 
@@ -42,7 +43,7 @@ export const axiosInstance = axios.create({
 // ); 
 
 // Optional: auto-redirect on 401
-import { useAuthStore } from "../store/auth";
+
 
 axiosInstance.interceptors.response.use(
   (res) => res,

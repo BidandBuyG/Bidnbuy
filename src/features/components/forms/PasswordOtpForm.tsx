@@ -3,7 +3,7 @@ import type { UseFormReturn } from "react-hook-form";
 import { useEffect, useState } from "react";
 import AuthTemplate from "../AuthCardTemplate";
 import { Button } from "../../../components/ui/button";
-import { getSlideClass } from "../../lib/utils";
+import { getSlideClass } from "../../../lib/utils";
 import {
   Form,
   FormControl,
@@ -11,7 +11,7 @@ import {
   FormItem,
   FormMessage,
 } from "../../../components/ui/form";
-import type { PasswordOtpFormValues } from "../../lib/validations/auth";
+import type { PasswordOtpFormValues } from "../../../lib/validations/auth";
 import { ArrowLeft } from "lucide-react";
 import {
   InputOTP,
