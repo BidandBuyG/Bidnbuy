@@ -66,7 +66,7 @@ export const FormSchema = z.object({
   }),
 });
 
-export function AddReferralSheet({
+export function AddUserSheet({
   side = "right",
   open,
   onOpenChange,

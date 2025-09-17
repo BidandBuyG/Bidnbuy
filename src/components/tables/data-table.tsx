@@ -26,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
-  header?: string;
+  header?: JSX.Element;
   button?: JSX.Element;
   externalTabs?: JSX.Element;
   hideTableBody?: boolean;
@@ -90,9 +90,9 @@ export function DataTable<TData, TValue>({
       <div className="mx-auto mb-5">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-white font-header">
+            <div className="text-2xl md:text-[31px] font-semibold text-white">
               {header}
-            </h1>
+            </div>
             <div>{externalTabs}</div>
           </div>
 

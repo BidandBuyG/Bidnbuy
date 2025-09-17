@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export type ReferralInfo = {
+export type UserInfo = {
   id: string;
   profileImg: string;
   firstName: string;
@@ -44,12 +44,12 @@ export type ReferralInfo = {
   category: string;
 };
 
-export function ReferralInfoSheet({
-  referral,
+export function AddUserInfoSheet({
+  user,
   trigger,
   side = "right",
 }: {
-  referral: ReferralInfo;
+  user: UserInfo;
   trigger?: React.ReactNode;
   side?: "left" | "right" | "top" | "bottom";
 }) {
@@ -58,12 +58,12 @@ export function ReferralInfoSheet({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      firstName: referral.firstName ? referral.firstName : "",
-      lastName: referral.lastName ? referral.lastName : "",
-      email: referral.email ? referral.email : "",
-      telephone: referral.phone ? referral.phone : "",
-      category: referral.category ? referral.category.toLowerCase() : "",
-      gender: referral.gender ? referral.gender.toLowerCase() : "",
+      firstName: user.firstName ? user.firstName : "",
+      lastName: user.lastName ? user.lastName : "",
+      email: user.email ? user.email : "",
+      telephone: user.phone ? user.phone : "",
+      category: user.category ? user.category.toLowerCase() : "",
+      gender: user.gender ? user.gender.toLowerCase() : "",
     },
   });
 
@@ -102,7 +102,7 @@ export function ReferralInfoSheet({
               </div>
 
               <div>
-                Referral
+                User
                 <span className="text-[#E8FFFD80]"> Details</span>
               </div>
             </div>
@@ -113,14 +113,14 @@ export function ReferralInfoSheet({
 
         <ScrollArea className="flex-1 w-full pr-4">
           <div className="mt-4 space-y-4 w-full">
-            {referral.profileImg ? (
+            {user.profileImg ? (
               <img
-                src={referral.profileImg}
-                alt={`${referral.firstName} avatar`}
+                src={user.profileImg}
+                alt={`${user.firstName} avatar`}
                 className="h-[160px] w-[160px] object-cover rounded-md"
               />
             ) : (
-              referral.firstName?.charAt(0) || "?"
+              user.firstName?.charAt(0) || "?"
             )}
 
             <div className="mt-[3em]">

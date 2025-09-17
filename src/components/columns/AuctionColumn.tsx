@@ -3,20 +3,27 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { User, MoreVertical } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ReferralInfoSheet } from "../referrals/ReferralInfoSheet";
+import { AuctionInfoSheet } from "../referrals/AuctionInfoSheet";
 
-export interface Referral {
+export interface Auction {
   id: string;
-  profileImg: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  phone: string;
-  email: string;
-  category: string;
+  productImg: string;
+  productName: string;
+  sellerName: string;
+  startDate: string;
+  timeLeft: string;
+  intestedBidders: {
+    id: string;
+    name: string;
+    date: string;
+    amount: string;
+    avatar: string;
+  }[];
+  initialBid: number;
+  highestBid: number;
 }
 
-export const ReferralColumn: ColumnDef<Referral, any>[] = [
+export const AuctionColumn: ColumnDef<Auction, any>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -33,15 +40,15 @@ export const ReferralColumn: ColumnDef<Referral, any>[] = [
   },
 
   {
-    accessorKey: "profileImg",
-    header: "Photo",
+    accessorKey: "productImg",
+    header: "Product",
     cell: ({ row }) => {
-      const { profileImg } = row.original;
+      const { productImg } = row.original;
       return (
         <div className="capitalize truncate max-w-[180px]">
-          {profileImg ? (
+          {productImg ? (
             <img
-              src={profileImg}
+              src={productImg}
               alt="profile"
               className="h-[45px] w-[44px] rounded-md object-cover"
             />
@@ -54,79 +61,104 @@ export const ReferralColumn: ColumnDef<Referral, any>[] = [
   },
 
   {
-    accessorKey: "firstName",
-    header: "First Name",
+    accessorKey: "productName",
+    header: "Product Name",
     cell: ({ row }) => {
-      const { firstName } = row.original;
+      const { productName } = row.original;
       return (
         <div className="capitalize truncate max-w-[180px]">
-          {firstName ? firstName : "---"}
+          {productName ? productName : "---"}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "sellerName",
+    header: "Seller ",
+    cell: ({ row }) => {
+      const { sellerName } = row.original;
+      return (
+        <div className="capitalize truncate max-w-[180px]">
+          {sellerName ? sellerName : "---"}
         </div>
       );
     },
   },
 
   {
-    accessorKey: "lastName",
-    header: "Last Name",
+    accessorKey: "startDate",
+    header: "start Date",
     cell: ({ row }) => {
-      const { lastName } = row.original;
+      const { startDate } = row.original;
       return (
         <div className="capitalize truncate max-w-[180px]">
-          {lastName ? lastName : "---"}
+          {startDate ? startDate : "---"}
         </div>
       );
     },
   },
 
   {
-    accessorKey: "gender",
-    header: "Gender",
+    accessorKey: "timeLeft",
+    header: "Time Left",
     cell: ({ row }) => {
-      const { gender } = row.original;
+      const { timeLeft } = row.original;
       return (
         <div className="capitalize truncate max-w-[180px]">
-          {gender ? gender : "---"}
+          {timeLeft ? timeLeft : "---"}
         </div>
       );
     },
   },
 
   {
-    accessorKey: "phone",
-    header: "Phone",
+    accessorKey: "intestedBiddersUrl",
+    header: "Interested Bidders",
     cell: ({ row }) => {
-      const { phone } = row.original;
+      const { intestedBidders } = row.original;
       return (
         <div className="capitalize truncate max-w-[180px]">
-          {phone ? phone : "---"}
+          {intestedBidders && intestedBidders.length > 0 ? (
+            <div className="flex -space-x-2">
+              {intestedBidders.map((bidder) => (
+                <img
+                  key={bidder.id}
+                  src={bidder.avatar}
+                  alt={bidder.name}
+                  className="w-8 h-8 object-cover rounded-md"
+                />
+              ))}
+            </div>
+          ) : (
+            "---"
+          )}
         </div>
       );
     },
   },
 
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "initialBid",
+    header: "Initial Bid",
     cell: ({ row }) => {
-      const { email } = row.original;
+      const { initialBid } = row.original;
       return (
         <div className="capitalize truncate max-w-[200px]">
-          {email ? email : "---"}
+          {initialBid ? initialBid : "---"}
         </div>
       );
     },
   },
 
   {
-    accessorKey: "category",
-    header: "Category",
+    accessorKey: "highestBid",
+    header: "highest Bid",
     cell: ({ row }) => {
-      const { category } = row.original;
+      const { highestBid } = row.original;
       return (
         <div className="capitalize truncate max-w-[180px]">
           <div className="bg-[#EE9F0524] text-white rounded-md text-sm text-center h-[39px] w-[75px] flex items-center justify-center px-2">
-            {category ? category : "---"}
+            {highestBid ? highestBid : "---"}
           </div>
         </div>
       );
@@ -138,12 +170,12 @@ export const ReferralColumn: ColumnDef<Referral, any>[] = [
     header: "Actions",
     enableHiding: false,
     cell: ({ row }) => {
-      return <CellAction referral={row.original} />;
+      return <CellAction auction={row.original} />;
     },
   },
 ];
 
-const CellAction = ({ referral }: { referral: Referral }) => {
+const CellAction = ({ auction }: { auction: Auction }) => {
   return (
     <div>
       <Popover>
@@ -153,7 +185,7 @@ const CellAction = ({ referral }: { referral: Referral }) => {
         <PopoverContent className="w-40 bg-[#007F9314] p-3">
           <ul className="w-full">
             <li className="hover:bg-[#27a6b9] rounded-md p-2 w-full cursor-pointer bg-[#007F93] text-white flex flex-col items-center">
-              <ReferralInfoSheet referral={referral} />
+              <AuctionInfoSheet auction={auction} />
             </li>
             <li></li>
           </ul>

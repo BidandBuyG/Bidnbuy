@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ReferralColumn } from "../../../components/columns/ReferralColumn";
-import { ReferralTable } from "../../../components/tables/ReferralTable";
+import { AddUserColumn } from "../../../components/columns/AddUserColumn";
+import { AddUserTable } from "@/components/tables/AddUserTable";
 import User1 from "../../../assets/addUser.png";
 import User2 from "../../../assets/photo.png";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getValidLimit, getValidPage } from "@/lib/utils";
 import { MarketingDashboardLayout } from "@/components/layout/MarketingDashboardLayout";
-import Header from "@/components/Header";
-import MarketingStats from "../components/MarketingStats";
 import { BottomSectionLinks } from "@/components/layout/BottomSectionLinks";
 
-const dummyReferrals = [
+const dummyUser = [
   {
-    id: "4534",
+    id: "234",
     profileImg: User1,
     firstName: "Angela",
     lastName: "Balogun",
@@ -23,7 +21,7 @@ const dummyReferrals = [
     category: "Vendor",
   },
   {
-    id: "4534",
+    id: "564",
     profileImg: User2,
     firstName: "David",
     lastName: "Balogun",
@@ -34,10 +32,10 @@ const dummyReferrals = [
   },
 ];
 
-export default function Referrals() {
+export default function AddUser() {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
-  const [data, setData] = useState(dummyReferrals);
+  const [data, setData] = useState(dummyUser);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -53,7 +51,7 @@ export default function Referrals() {
 
     // Pretend API filter
     setTimeout(() => {
-      let filtered = dummyReferrals;
+      let filtered = dummyUser;
       if (query) {
         const q = query.toLowerCase();
         filtered = filtered.filter((r) =>
@@ -93,16 +91,10 @@ export default function Referrals() {
   return (
     <MarketingDashboardLayout>
       <div className="bg-[#00191F] text-white">
-        <Header firstText="My" greyText="Referrals" />
-        {/* Metric Cards */}
-        <div className="mb-8">
-          <MarketingStats />
-        </div>
-
         <div className="mt-[5em]">
-          <ReferralTable
+          <AddUserTable
             data={data}
-            referralColumns={ReferralColumn}
+            userColumns={AddUserColumn}
             isLoading={isLoading}
             onRetry={() => {
               setLoading(true);

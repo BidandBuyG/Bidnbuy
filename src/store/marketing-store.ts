@@ -5,6 +5,10 @@ export type MarketingStats = {
   totalSignups: number;
   referralClicks: number;
   rewardsEarned: number;
+  currency: string;
+  signupImages: string[];
+  clicks: number;
+  performance: { day: string; value: number }[];
 };
 
 export type Referral = {
@@ -56,7 +60,23 @@ export const useMarketingStore = create<MarketingState>()(
       stats: {
         totalSignups: 46,
         referralClicks: 95,
-        rewardsEarned: 5000,
+        rewardsEarned: 456000,
+        currency: "₦",
+        signupImages: [
+          "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=100&h=60&fit=crop",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=100&h=60&fit=crop",
+          "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=100&h=60&fit=crop",
+        ], // Example array of images
+        clicks: 95,
+        performance: [
+          { day: "M", value: 60 },
+          { day: "T", value: 40 },
+          { day: "W", value: 55 },
+          { day: "T", value: 50 },
+          { day: "F", value: 35 },
+          { day: "S", value: 53 },
+          { day: "S", value: 58 },
+        ],
       },
       referrals: [
         {

@@ -3,9 +3,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { User, MoreVertical } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ReferralInfoSheet } from "../referrals/ReferralInfoSheet";
+import { AddUserInfoSheet } from "../referrals/AddUserInfoSheet";
 
-export interface Referral {
+export interface User {
   id: string;
   profileImg: string;
   firstName: string;
@@ -16,7 +16,7 @@ export interface Referral {
   category: string;
 }
 
-export const ReferralColumn: ColumnDef<Referral, any>[] = [
+export const AddUserColumn: ColumnDef<User, any>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -143,7 +143,7 @@ export const ReferralColumn: ColumnDef<Referral, any>[] = [
   },
 ];
 
-const CellAction = ({ referral }: { referral: Referral }) => {
+const CellAction = ({ referral }: { referral: User }) => {
   return (
     <div>
       <Popover>
@@ -153,7 +153,7 @@ const CellAction = ({ referral }: { referral: Referral }) => {
         <PopoverContent className="w-40 bg-[#007F9314] p-3">
           <ul className="w-full">
             <li className="hover:bg-[#27a6b9] rounded-md p-2 w-full cursor-pointer bg-[#007F93] text-white flex flex-col items-center">
-              <ReferralInfoSheet referral={referral} />
+              <AddUserInfoSheet user={referral} />
             </li>
             <li></li>
           </ul>

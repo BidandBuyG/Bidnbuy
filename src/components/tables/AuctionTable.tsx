@@ -7,26 +7,33 @@ import { useState } from "react";
 import TableIcon from "../../assets/table-tab-icon.svg";
 import CardIcon from "../../assets/card-tab-icon.svg";
 import { TableSkeleton } from "./TableSkeleton";
-import ReferralCardData from "./ReferralCardData";
 import { TableErrorState } from "../referrals/ErrorTableData";
 import { TableEmptyState } from "../referrals/EmptyPlaceholder";
-import { ReferralInfoSheet } from "../referrals/ReferralInfoSheet";
-import EmptyStateImage from "../../assets/emptyImg.png";
+import { AuctionInfoSheet } from "../referrals/AuctionInfoSheet";
+import EmptyStateImage from "../../assets/user-empty-data.png";
+import AuctionItemCard from "./AuctionItemCard";
 
-interface Referral {
+interface Auction {
   id: string;
-  profileImg: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  phone: string;
-  email: string;
-  category: string;
+  productImg: string;
+  productName: string;
+  sellerName: string;
+  startDate: string;
+  timeLeft: string;
+  intestedBidders: {
+    id: string;
+    name: string;
+    date: string;
+    amount: string;
+    avatar: string;
+  }[];
+  initialBid: number;
+  highestBid: number;
 }
 
 interface Props {
-  data: Referral[];
-  referralColumns: any;
+  data: Auction[];
+  auctionColumns: any;
   isLoading: boolean;
   isError?: boolean;
   errorMessage?: string;
@@ -40,9 +47,9 @@ interface Props {
   onQueryChange: (query: string) => void;
 }
 
-export const ReferralTable = ({
+export const AuctionTable = ({
   data,
-  referralColumns,
+  auctionColumns,
   isLoading,
   isError = false,
   errorMessage,
@@ -68,8 +75,8 @@ export const ReferralTable = ({
                 title={
                   <div>
                     <h2>
-                      <span>My</span>{" "}
-                      <span className="text-[#748C8D]">Referrals</span>
+                      <span>Ongoing</span>{" "}
+                      <span className="text-[#748C8D]">Auctions</span>
                     </h2>
                   </div>
                 }
@@ -82,8 +89,8 @@ export const ReferralTable = ({
                 title={
                   <div>
                     <h2>
-                      <span>My</span>{" "}
-                      <span className="text-[#748C8D]">Referrals</span>
+                      <span>Ongoing</span>{" "}
+                      <span className="text-[#748C8D]">Auctions</span>
                     </h2>
                   </div>
                 }
@@ -106,12 +113,12 @@ export const ReferralTable = ({
                       header={
                         <div>
                           <h2>
-                            <span>My</span>{" "}
-                            <span className="text-[#748C8D]">Referrals</span>
+                            <span>Ongoing</span>{" "}
+                            <span className="text-[#748C8D]">Auctions</span>
                           </h2>
                         </div>
                       }
-                      columns={referralColumns}
+                      columns={auctionColumns}
                       searchKey="category"
                       button={
                         <Button className="bg-[#002129] hover:bg-[#007F93] text-white flex items-center gap-2">
@@ -154,19 +161,19 @@ export const ReferralTable = ({
                       customContent={
                         view === "card" ? (
                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-[2em] border-t border-[#E8FFFD33]">
-                            {data.map((ref) => (
-                              <div key={ref.id} className="">
-                                <ReferralCardData
-                                  ref={ref}
+                            {data.map((aution) => (
+                              <div key={aution.id} className="">
+                                <AuctionItemCard
+                                  data={aution}
                                   button={
-                                    <ReferralInfoSheet
-                                      referral={ref}
+                                    <AuctionInfoSheet
+                                      auction={aution}
                                       trigger={
                                         <button
-                                          className="w-full py-5 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-600 transition"
                                           type="button"
+                                          className="bg-[#1894A2] text-white px-6 py-2 rounded-lg font-medium text-lg transition hover:bg-[#117484] focus:outline-none"
                                         >
-                                          View Info
+                                          View More
                                         </button>
                                       }
                                     />
@@ -189,31 +196,30 @@ export const ReferralTable = ({
                   <TableEmptyState
                     view={view}
                     setView={setView}
+                    imgSrc={EmptyStateImage}
                     title={
                       <div>
                         <h2>
-                          <span>My</span>{" "}
-                          <span className="text-[#748C8D]">Referrals</span>
+                          <span>Ongoing</span>{" "}
+                          <span className="text-[#748C8D]">Auctions</span>
                         </h2>
                       </div>
                     }
-                    imgSrc={EmptyStateImage}
                     filterBtn={true}
                     description={
                       <div className="flex flex-col items-center text-center">
                         <h2 className="text-lg font-medium text-white">
-                          You haven’t referred anyone yet. Share
+                          There is no ongoing auction.
                           <br />
-                          your referral link and watch your rewards grow
-                          <br />
-                          rewards grow
+                          Kindly check back later.
                         </h2>
 
                         <Button
                           type="submit"
                           className="w-1/2 bg-[#EE9F05] hover:bg-[#b89e6a] h-12 mt-7"
+                          onClick={() => window.location.reload()}
                         >
-                          Share Referral Link
+                          Refresh page
                         </Button>
                       </div>
                     }

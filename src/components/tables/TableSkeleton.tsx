@@ -1,28 +1,32 @@
 import { Plus, Search } from "lucide-react";
-import React from "react";
+import React, { JSX } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
 interface TableSkeletonProps {
-  setOpenAddUser: (open: boolean) => void;
+  setOpenAddUser?: (open: boolean) => void;
   view: "table" | "card";
   setView: (view: "table" | "card") => void;
+  title: JSX.Element;
+  filterBtn?: boolean;
 }
 
 export const TableSkeleton: React.FC<TableSkeletonProps> = ({
   setOpenAddUser,
   view,
   setView,
+  title,
+  filterBtn = false,
 }) => {
   return (
     <div>
       <div className="mx-auto mb-5">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-white font-header">
-              My Referrals
-            </h1>
+            <div className="text-3xl font-bold text-white font-header">
+              {title}
+            </div>
             <div>
               {/* Add the tabs to the skeleton */}
               <Tabs
@@ -59,14 +63,16 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({
                 />
               </div>
 
-              <Button
-                className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2"
-                onClick={() => setOpenAddUser(true)}
-                disabled
-              >
-                <Plus />
-                Add User
-              </Button>
+              {filterBtn ? null : (
+                <Button
+                  className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2"
+                  onClick={() => setOpenAddUser?.(true)}
+                  disabled
+                >
+                  <Plus />
+                  Add User
+                </Button>
+              )}
             </div>
           </div>
         </div>

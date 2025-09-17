@@ -10,7 +10,9 @@ import SignUpRoleSelect from "../features/components/forms/SignupRoleSelect";
 import ForgotPassword from "../features/auth/pages/ForgotPassword";
 import VerifyEmail from "../features/auth/pages/VerifyEmail";
 import ChangePassword from "../features/auth/pages/ChangePassword";
-import Metrics from "../features/marketing/pages/Metrics";
+import OverviewPage from "@/features/marketing/pages/OverviewPage";
+import AddUser from "@/features/marketing/pages/AddUser";
+import AuctionPage from "@/features/marketing/pages/AuctionPage";
 
 export default function App() {
   return (
@@ -20,12 +22,14 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/marketing/signup" element={<MarketerSignup />} />
-        <Route path="/marketing/referrals" element={<Referrals />} />
         <Route path="/signup-select" element={<SignUpRoleSelect />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />{" "}
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<ChangePassword />} />
-        <Route path="/marketing/metrics" element={<Metrics />} />
+        <Route path="/overview" element={<OverviewPage />} />
+        <Route path="/marketing/add-user" element={<AddUser />} />
+        <Route path="/marketing/auctions" element={<AuctionPage />} />{" "}
+        <Route path="/marketing/referrals" element={<Referrals />} />
         {/* Joshua’s work */}
         <Route path="/wallet/overview" element={<WalletOverview />} />
         <Route path="/wallet/transactions" element={<WalletTransactions />} />

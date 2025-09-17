@@ -1,5 +1,5 @@
 import { Plus, Search } from "lucide-react";
-import React from "react";
+import React, { JSX } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
@@ -7,29 +7,33 @@ import TableIcon from "../../assets/table-tab-icon.svg";
 import CardIcon from "../../assets/card-tab-icon.svg";
 import { ErrorPlaceholder } from "../ErrorPlaceholder";
 
-interface ReferralErrorStateProps {
-  setOpenAddUser: (open: boolean) => void;
+interface TableErrorStateProps {
+  setOpenAddUser?: (open: boolean) => void;
   view: "table" | "card";
   setView: (view: "table" | "card") => void;
   errorMessage: string;
   onRetry: () => void;
+  title: JSX.Element;
+  filterBtn?: boolean;
 }
 
-export const ReferralErrorState: React.FC<ReferralErrorStateProps> = ({
+export const TableErrorState: React.FC<TableErrorStateProps> = ({
   setOpenAddUser,
   view,
   setView,
   errorMessage,
   onRetry,
+  title,
+  filterBtn = false,
 }) => {
   return (
     <div className="w-full">
       <div className="mx-auto mb-5">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-white font-header">
-              My Referrals
-            </h1>
+            <div className="text-3xl font-bold text-white font-header">
+              {title}
+            </div>
             <div>
               <Tabs
                 value={view}
@@ -66,15 +70,16 @@ export const ReferralErrorState: React.FC<ReferralErrorStateProps> = ({
                   className="placeholder:text-white placeholder-opacity-100 max-w-lg w-lg pl-9 h-10 focus-visible:border-none border-[#002129] bg-[#002129] text-white"
                 />
               </div>
-
-              <Button
-                className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2"
-                onClick={() => setOpenAddUser(true)}
-                disabled
-              >
-                <Plus />
-                Add User
-              </Button>
+              {filterBtn ? null : (
+                <Button
+                  className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2"
+                  onClick={() => setOpenAddUser?.(true)}
+                  disabled
+                >
+                  <Plus />
+                  Add User
+                </Button>
+              )}
             </div>
           </div>
         </div>

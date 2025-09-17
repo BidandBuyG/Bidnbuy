@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "../ui/button";
 import { DataTable } from "./data-table";
-import { ListFilter } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { useState } from "react";
 import TableIcon from "../../assets/table-tab-icon.svg";
 import CardIcon from "../../assets/card-tab-icon.svg";
+import { AddUserSheet } from "../referrals/AddUserSheet";
 import { TableSkeleton } from "./TableSkeleton";
 import ReferralCardData from "./ReferralCardData";
 import { TableErrorState } from "../referrals/ErrorTableData";
 import { TableEmptyState } from "../referrals/EmptyPlaceholder";
-import { ReferralInfoSheet } from "../referrals/ReferralInfoSheet";
-import EmptyStateImage from "../../assets/emptyImg.png";
+import { AddUserInfoSheet } from "../referrals/AddUserInfoSheet";
+import EmptyStateImage from "../../assets/user-empty-data.png";
 
-interface Referral {
+interface User {
   id: string;
   profileImg: string;
   firstName: string;
@@ -25,8 +26,8 @@ interface Referral {
 }
 
 interface Props {
-  data: Referral[];
-  referralColumns: any;
+  data: User[];
+  userColumns: any;
   isLoading: boolean;
   isError?: boolean;
   errorMessage?: string;
@@ -40,9 +41,9 @@ interface Props {
   onQueryChange: (query: string) => void;
 }
 
-export const ReferralTable = ({
+export const AddUserTable = ({
   data,
-  referralColumns,
+  userColumns,
   isLoading,
   isError = false,
   errorMessage,
@@ -55,6 +56,7 @@ export const ReferralTable = ({
   onQueryChange,
 }: Props) => {
   const [view, setView] = useState<"table" | "card">("table");
+  const [openAddUser, setOpenAddUser] = useState(false);
 
   return (
     <>
@@ -63,17 +65,18 @@ export const ReferralTable = ({
           <div className="mt-8">
             {isLoading && (
               <TableSkeleton
+                setOpenAddUser={setOpenAddUser}
                 view={view}
                 setView={setView}
                 title={
                   <div>
                     <h2>
-                      <span>My</span>{" "}
-                      <span className="text-[#748C8D]">Referrals</span>
+                      <span>Add</span>{" "}
+                      <span className="text-[#748C8D]">User</span>
                     </h2>
                   </div>
                 }
-                filterBtn={true}
+                filterBtn={false}
               />
             )}
 
@@ -82,12 +85,12 @@ export const ReferralTable = ({
                 title={
                   <div>
                     <h2>
-                      <span>My</span>{" "}
-                      <span className="text-[#748C8D]">Referrals</span>
+                      <span>Add</span>{" "}
+                      <span className="text-[#748C8D]">User</span>
                     </h2>
                   </div>
                 }
-                filterBtn={true}
+                setOpenAddUser={setOpenAddUser}
                 view={view}
                 setView={setView}
                 errorMessage={
@@ -106,17 +109,20 @@ export const ReferralTable = ({
                       header={
                         <div>
                           <h2>
-                            <span>My</span>{" "}
-                            <span className="text-[#748C8D]">Referrals</span>
+                            <span>Add</span>{" "}
+                            <span className="text-[#748C8D]">User</span>
                           </h2>
                         </div>
                       }
-                      columns={referralColumns}
+                      columns={userColumns}
                       searchKey="category"
                       button={
-                        <Button className="bg-[#002129] hover:bg-[#007F93] text-white flex items-center gap-2">
-                          <ListFilter />
-                          Filters
+                        <Button
+                          className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2"
+                          onClick={() => setOpenAddUser(true)}
+                        >
+                          <Plus />
+                          Add User
                         </Button>
                       }
                       externalTabs={
@@ -159,8 +165,8 @@ export const ReferralTable = ({
                                 <ReferralCardData
                                   ref={ref}
                                   button={
-                                    <ReferralInfoSheet
-                                      referral={ref}
+                                    <AddUserInfoSheet
+                                      user={ref}
                                       trigger={
                                         <button
                                           className="w-full py-5 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-600 transition"
@@ -187,33 +193,35 @@ export const ReferralTable = ({
                   </>
                 ) : (
                   <TableEmptyState
+                    setOpenAddUser={setOpenAddUser}
                     view={view}
                     setView={setView}
+                    imgSrc={EmptyStateImage}
                     title={
                       <div>
                         <h2>
-                          <span>My</span>{" "}
-                          <span className="text-[#748C8D]">Referrals</span>
+                          <span>Add</span>{" "}
+                          <span className="text-[#748C8D]">User</span>
                         </h2>
                       </div>
                     }
-                    imgSrc={EmptyStateImage}
-                    filterBtn={true}
+                    filterBtn={false}
                     description={
                       <div className="flex flex-col items-center text-center">
                         <h2 className="text-lg font-medium text-white">
-                          You haven’t referred anyone yet. Share
+                          This space looks empty! Add a user to
                           <br />
-                          your referral link and watch your rewards grow
+                          begin tracking bids, referrals, and
                           <br />
-                          rewards grow
+                          team performance
                         </h2>
 
                         <Button
                           type="submit"
                           className="w-1/2 bg-[#EE9F05] hover:bg-[#b89e6a] h-12 mt-7"
+                          onClick={() => setOpenAddUser(true)}
                         >
-                          Share Referral Link
+                          Add a User Now
                         </Button>
                       </div>
                     }
@@ -223,6 +231,7 @@ export const ReferralTable = ({
             )}
           </div>
         </div>
+        <AddUserSheet open={openAddUser} onOpenChange={setOpenAddUser} />
       </section>
     </>
   );
