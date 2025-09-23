@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation } from "@tanstack/react-query"
-import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query"
-import { toast } from "sonner"
-import { useAuthStore } from "../store/auth"
-
-
+import { useMutation } from "@tanstack/react-query";
+import type {
+  UseMutationOptions,
+  UseMutationResult,
+} from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useAuthStore } from "../store/auth";
 
 /**
  * A reusable hook for authentication mutations (login, signup).
@@ -18,13 +19,14 @@ export function useAuthMutation<TVariables = any, TData = any>(
 ): UseMutationResult<TData, any, TVariables> {
   return useMutation<TData, any, TVariables>({
     mutationFn,
-    onSuccess: (data, variables, context) => {
-      const store = useAuthStore.getState()
+    onSuccess: (data, variables, context, mutation) => {
+      const store = useAuthStore.getState();
       console.log("Raw login response:", data);
+
       if ((data as any)?.token && (data as any)?.user) {
-        store.setAuth((data as any).token, (data as any).user)
+        store.setAuth((data as any).token, (data as any).user);
         console.log("Auth store after setAuth:", store);
-        toast.success("Success!")
+        toast.success("Success!");
 
         // Ensure persistence is written immediately for tests / navigation flow
         try {
@@ -32,15 +34,22 @@ export function useAuthMutation<TVariables = any, TData = any>(
           const userToStore = (data as any).user;
           localStorage.setItem(
             "auth-storage",
-            JSON.stringify({ state: { token: tokenToStore, user: userToStore, isAuthenticated: !!tokenToStore } })
+            JSON.stringify({
+              state: {
+                token: tokenToStore,
+                user: userToStore,
+                isAuthenticated: !!tokenToStore,
+              },
+            })
           );
         } catch (e) {
           // ignore (e.g., server environment)
         }
-
       } else {
         // Dev mode: no token/user returned, use mock
-        console.warn("⚠️ No token/user in response. Using mock data for development.");
+        console.warn(
+          "⚠️ No token/user in response. Using mock data for development."
+        );
         const devUser = {
           id: "1",
           email: "dev@example.com",
@@ -48,25 +57,31 @@ export function useAuthMutation<TVariables = any, TData = any>(
           name: "Favour the React dev",
           role: "customer" as const,
         };
-        store.setAuth("dev-fake-token", devUser)
+        store.setAuth("dev-fake-token", devUser);
 
         // Persist dev token immediately as well
         try {
           localStorage.setItem(
             "auth-storage",
-            JSON.stringify({ state: { token: "dev-fake-token", user: devUser, isAuthenticated: true } })
+            JSON.stringify({
+              state: {
+                token: "dev-fake-token",
+                user: devUser,
+                isAuthenticated: true,
+              },
+            })
           );
         } catch (e) {
           // ignore
         }
       }
 
-    console.log("Auth store after setAuth:", useAuthStore.getState());
+      console.log("Auth store after setAuth:", useAuthStore.getState());
 
-      if (options.onSuccess) options.onSuccess(data, variables, context)
-
+      if (options.onSuccess)
+        options.onSuccess(data, variables, context, mutation);
     },
-    onError: (error, variables, context) => {
+    onError: (error, variables, context, mutation) => {
       const err: any = error;
       // Network / CORS (request made but no response)
       if (err?.message && /network|cors/i.test(err.message)) {
@@ -76,12 +91,15 @@ export function useAuthMutation<TVariables = any, TData = any>(
           "Network or CORS error: Unable to reach authentication server. Please verify VITE_API_URL and server CORS settings."
         );
       } else {
-        const message = (err?.response?.data?.message) || err?.message || "Something went wrong";
+        const message =
+          err?.response?.data?.message ||
+          err?.message ||
+          "Something went wrong";
         toast.error(message);
       }
 
-      if (options.onError) options.onError(error, variables, context)
+      if (options.onError) options.onError(error, variables, context, mutation);
     },
     ...options,
-  })
+  });
 }

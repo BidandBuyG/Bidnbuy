@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "jest.config.mjs"
+    "jest.config.mjs",
+    "vite-env.d.ts"
   ],
   "exclude": ["node_modules"]
 }
