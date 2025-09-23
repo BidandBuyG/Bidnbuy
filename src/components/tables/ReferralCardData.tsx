@@ -10,7 +10,7 @@ type ReferralCardProps = {
 
 const ReferralCardData: React.FC<ReferralCardProps> = ({ ref, button }) => {
   return (
-    <div className="bg-[#00191F] w-[320px] overflow-hidden border-none">
+    <div className="bg-[#00191F] overflow-hidden border-none">
       <div className="relative h-[360px] w-full">
         <img
           src={ref.profileImg}
@@ -27,7 +27,7 @@ const ReferralCardData: React.FC<ReferralCardProps> = ({ ref, button }) => {
       <div className="relative -mt-35 px-6 pb-10 pt-10 flex flex-col gap-1">
         <div className="flex items-center gap-2 text-yellow-400 text-xl font-semibold">
           <User className="w-7 h-7 stroke-yellow-400" />
-          {ref.name}
+          {ref.firstName} {ref.lastName}
         </div>
         <div className="flex items-center gap-2 text-white">
           <img src={MailIcon} className="w-6 h-6" />

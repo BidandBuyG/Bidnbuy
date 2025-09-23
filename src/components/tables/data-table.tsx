@@ -21,18 +21,22 @@ import {
 } from "../ui/table";
 import { Button } from "../ui/button";
 import { useDebounce } from "@/lib/utils";
+import { TableSkeleton } from "./TableSkeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  searchKey: string;
   header?: JSX.Element;
   button?: JSX.Element;
   externalTabs?: JSX.Element;
   hideTableBody?: boolean;
   customContent?: JSX.Element;
+  isLoading: boolean;
+  EmptyStateImage: string;
+  EmptyStateDescription: JSX.Element;
 
   page: number;
+  totalPages: number;
   limit: number;
   query: string;
   onPageChange: (page: number) => void;
@@ -43,18 +47,21 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  // searchKey,
   header,
   button,
   externalTabs,
   hideTableBody,
   customContent,
+  EmptyStateImage,
+  EmptyStateDescription,
   page,
+  totalPages,
   limit,
   query,
   onPageChange,
   onLimitChange,
   onQueryChange,
+  isLoading,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -62,7 +69,7 @@ export function DataTable<TData, TValue>({
   const [localQuery, setLocalQuery] = useState(query);
   const debouncedQuery = useDebounce(localQuery);
 
-  // 🔄 Sync debounced value to parent
+  // Sync debounced value to parent
   useEffect(() => {
     if (debouncedQuery !== query) {
       onQueryChange(debouncedQuery);
@@ -114,12 +121,10 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
 
-      {/* table */}
       {hideTableBody ? (
         <div>{customContent}</div>
       ) : (
         <div>
-          {/* border */}
           <Table>
             <TableHeader className="border-t border-[#E8FFFD33]">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -144,7 +149,22 @@ export function DataTable<TData, TValue>({
             </TableHeader>
 
             <TableBody>
-              {table.getRowModel().rows?.length ? (
+              {isLoading ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-40 text-center"
+                  >
+                    <TableSkeleton />
+                  </TableCell>
+                </TableRow>
+              ) : hideTableBody ? (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="p-0">
+                    {customContent}
+                  </TableCell>
+                </TableRow>
+              ) : data.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
@@ -167,9 +187,37 @@ export function DataTable<TData, TValue>({
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
-                    className="h-20 text-center font-semibold text-[15px]"
+                    className="h-40 text-center"
                   >
-                    No data.
+                    <div className="flex flex-col items-center gap-4">
+                      {query ? (
+                        <>
+                          <span>No results match your search.</span>
+                          <Button
+                            onClick={() => {
+                              setLocalQuery("");
+                              onQueryChange("");
+                            }}
+                            className="mt-2 px-4 py-2 rounded bg-[#007F93] hover:bg-[#1892a5] text-white transition font-medium"
+                            type="button"
+                          >
+                            Clear Search
+                          </Button>
+                        </>
+                      ) : (
+                        <div className="w-full h-[400px] flex flex-col items-center justify-center gap-6 mt-[3em] pb-[3em]">
+                          <div>
+                            <img
+                              src={EmptyStateImage}
+                              alt="No Referrals"
+                              className="w-[200px] h-[200px]"
+                            />
+                          </div>
+
+                          <>{EmptyStateDescription}</>
+                        </div>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               )}
@@ -199,7 +247,7 @@ export function DataTable<TData, TValue>({
         </div>
 
         <div className="flex items-center gap-2 text-sm">
-          <span>Page {page}</span>
+          Page {page} of {totalPages}
           <Button
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
@@ -207,21 +255,15 @@ export function DataTable<TData, TValue>({
           >
             Previous
           </Button>
-          <button
+          <Button
             onClick={() => onPageChange(page + 1)}
-            className="bg-[#007F93] hover:bg-[#1892a5] text-white px-3 py-1 rounded"
+            disabled={page >= totalPages}
+            className="bg-[#007F93] hover:bg-[#1892a5] text-white px-3 py-1 rounded disabled:opacity-50"
           >
             Next
-          </button>
+          </Button>
         </div>
       </div>
-
-      {/* Empty state */}
-      {data.length === 0 && (
-        <div className="text-center text-lg font-semibold mt-8">
-          {query ? "No results match your search." : "No referrals yet."}
-        </div>
-      )}
     </>
   );
 }

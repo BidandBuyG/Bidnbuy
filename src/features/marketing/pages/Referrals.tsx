@@ -35,9 +35,11 @@ const dummyReferrals = [
 ];
 
 export default function Referrals() {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
-  const [data, setData] = useState(dummyReferrals);
+  const [allData] = useState(dummyReferrals); // keep the original untouched
+  const [data, setData] = useState(allData); // filtered data
+  const [filteredCount, setFilteredCount] = useState(allData.length);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -46,14 +48,18 @@ export default function Referrals() {
   const limit = getValidLimit(searchParams.get("limit"));
   const query = searchParams.get("query") || "";
 
+  const [totalPages, setTotalPages] = useState(
+    Math.max(1, Math.ceil(allData.length / limit))
+  );
+
   // Simulate API call on param change
   useEffect(() => {
+    let isCancelled = false;
     setLoading(true);
     setError(false);
 
-    // Pretend API filter
-    setTimeout(() => {
-      let filtered = dummyReferrals;
+    const timeout = setTimeout(() => {
+      let filtered = allData;
       if (query) {
         const q = query.toLowerCase();
         filtered = filtered.filter((r) =>
@@ -70,10 +76,31 @@ export default function Referrals() {
           )
         );
       }
-      setData(filtered);
-      setLoading(false);
+
+      if (!isCancelled) {
+        setData(filtered);
+        setFilteredCount(filtered.length);
+
+        const newTotalPages = Math.max(1, Math.ceil(filtered.length / limit));
+        setTotalPages(newTotalPages);
+
+        if (page > newTotalPages) {
+          setSearchParams({
+            page: String(newTotalPages),
+            limit: String(limit),
+            query,
+          });
+        }
+
+        setLoading(false); // only after data update
+      }
     }, 500);
-  }, [page, limit, query]);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [page, limit, query, allData]);
 
   useEffect(() => {
     // Only update if params were invalid
@@ -115,9 +142,10 @@ export default function Referrals() {
             page={page}
             limit={limit}
             query={query}
-            onPageChange={(newPage) =>
+            totalPages={totalPages}
+            onPageChange={(newPage: number) =>
               setSearchParams({
-                page: String(newPage),
+                page: String(Math.max(1, Math.min(newPage, totalPages))),
                 limit: String(limit),
                 query,
               })
