@@ -28,14 +28,14 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
             </div>
           ) : (
             <>
-              <CardHeader className="text-white text-md pt-2 pb-1 px-0 font-normal">
+              <CardHeader className="text-white text-sm sm:text-md pt-2 pb-1 px-0 font-normal">
                 Total Rewards Earned
               </CardHeader>
-              <CardContent className="flex items-center px-0 pb-2 pt-1">
-                <span className="text-6xl font-bold text-[#233B40] mr-1">
+              <CardContent className="flex flex-wrap items-center px-0 pb-2 pt-1">
+                <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-[#233B40] mr-1">
                   {stats.currency}
                 </span>
-                <span className="text-6xl font-bold text-cyan-50">
+                <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-cyan-50 truncate">
                   {stats.rewardsEarned.toLocaleString()}
                 </span>
               </CardContent>
@@ -45,7 +45,9 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
 
         {/* Total Signups */}
         <div className="w-full">
-          <p className="text-white text-md mb-2 font-normal">Total Signups</p>
+          <p className="text-white text-sm sm:text-md mb-2 font-normal">
+            Total Signups
+          </p>
           <Card className="w-full min-h-[120px] flex flex-col justify-center">
             {isLoading ? (
               <div className="flex justify-center items-center h-full gap-3">
@@ -53,14 +55,14 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
                 <Skeleton className="w-16 h-14 rounded bg-gray-700" />
               </div>
             ) : (
-              <CardContent className="flex items-center px-3 pb-2 pt-1">
-                <div className="flex items-center mr-3">
+              <CardContent className="flex items-center flex-wrap gap-2 px-3 pb-2 pt-1">
+                <div className="flex items-center mr-3 flex-shrink-0 overflow-hidden">
                   {stats.signupImages.map((img, idx) => (
                     <img
                       key={img}
                       src={img}
                       alt={`Signup ${idx + 1}`}
-                      className="w-11 h-11 rounded-md object-cover border-2 border-[#022328]"
+                      className="w-9 h-9 sm:w-11 sm:h-11 rounded-md object-cover border-2 border-[#022328]"
                       style={{
                         marginLeft: idx === 0 ? 0 : -16,
                         zIndex: stats.signupImages.length - idx,
@@ -68,7 +70,7 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
                     />
                   ))}
                 </div>
-                <span className="text-6xl font-semibold text-cyan-50">
+                <span className="text-2xl sm:text-4xl md:text-5xl font-semibold text-cyan-50 truncate">
                   {stats.totalSignups}
                 </span>
               </CardContent>
@@ -78,7 +80,9 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
 
         {/* Referral Clicks */}
         <div className="w-full">
-          <p className="text-white text-md mb-2 font-normal">Referral Clicks</p>
+          <p className="text-white text-sm sm:text-md mb-2 font-normal">
+            Referral Clicks
+          </p>
           <Card className="w-full min-h-[120px] flex flex-col justify-center">
             {isLoading ? (
               <div className="flex justify-center items-center h-full gap-3">
@@ -86,11 +90,16 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
                 <Skeleton className="w-24 h-14 rounded bg-gray-700" />
               </div>
             ) : (
-              <CardContent className="flex items-center gap-6 px-3 pb-2 pt-1">
-                <img src={ClicksIcon} className="h-10 w-10" />
-                <p className="text-6xl font-semibold text-cyan-50">
+              <CardContent className="flex items-center flex-wrap gap-4 px-3 pb-2 pt-1">
+                <img
+                  src={ClicksIcon}
+                  className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0"
+                />
+                <p className="text-2xl sm:text-4xl md:text-5xl font-semibold text-cyan-50 truncate">
                   {stats.clicks}
-                  <span className="ml-2">clicks</span>
+                  <span className="ml-1 sm:ml-2 text-2xl sm:text-4xl md:text-5xl font-semibold">
+                    clicks
+                  </span>
                 </p>
               </CardContent>
             )}
@@ -99,19 +108,21 @@ const MarketingStats = ({ isLoading }: MarketingStatsProps) => {
 
         {/* Performance */}
         <div className="w-full">
-          <p className="text-white text-md mb-2 font-normal">Performance</p>
+          <p className="text-white text-sm sm:text-md mb-2 font-normal">
+            Performance
+          </p>
           <Card className="w-full min-h-[120px] flex flex-col justify-center">
             {isLoading ? (
-              <div className="flex items-center justify-center gap-2 h-full">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 h-full">
                 {Array.from({ length: 7 }).map((_, idx) => (
                   <Skeleton
                     key={idx}
-                    className="w-6 h-10 rounded bg-gray-700"
+                    className="w-4 h-8 sm:w-6 sm:h-10 rounded bg-gray-700"
                   />
                 ))}
               </div>
             ) : (
-              <CardContent className="flex flex-col justify-center h-16 w-full p-0">
+              <CardContent className="flex flex-col justify-center h-20 w-full p-0">
                 <PerformanceChart chartData={chartData} />
               </CardContent>
             )}

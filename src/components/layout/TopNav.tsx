@@ -20,9 +20,9 @@ const navItems = [
 
 export function TopNav() {
   return (
-    <nav className="w-full max-w-[95%] mx-auto px-2 sm:px-6 md:px-8 py-6 flex items-center justify-between relative z-30">
+    <nav className="w-full max-w-[98%] mx-auto px-2 sm:px-6 md:px-8 py-6 flex items-center justify-between relative z-30">
       {/* Logo (left) */}
-      <div className="flex items-center gap-2 min-w-[120px]">
+      <div className="flex items-center gap-2 ">
         <img src={Logo} alt="Logo" className="h-[60px] w-[80px]" />
       </div>
       {/* Center nav links */}
