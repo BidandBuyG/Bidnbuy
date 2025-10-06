@@ -74,7 +74,7 @@ const AuctionItemCard: React.FC<AuctionItemCardProps> = ({ data, button }) => {
             {data.highestBid}
           </span>
         </div>
-        <div className="flex justify-end">{button}</div>
+        <div className="flex justify-end cursor-pointer">{button}</div>
       </div>
     </div>
   );

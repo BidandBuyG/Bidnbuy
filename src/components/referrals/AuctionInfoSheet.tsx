@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -43,14 +44,14 @@ export function AuctionInfoSheet({
       <SheetTrigger asChild>{Trigger}</SheetTrigger>
       <SheetContent
         side={side}
-        className="flex h-screen w-full flex-col bg-[#00191F] text-white sm:max-w-md border-[#00191F]"
+        className="flex h-screen w-full flex-col bg-[#00191F]  text-white sm:max-w-md border-[#00191F]"
       >
         <SheetHeader>
           <SheetTitle className="text-3xl">
             <div className="flex items-center gap-3 text-white justify-between w-[80%]">
-              <div>
+              <SheetClose className="cursor-pointer">
                 <ArrowLeft />
-              </div>
+              </SheetClose>
 
               <div>
                 Bid
@@ -65,7 +66,7 @@ export function AuctionInfoSheet({
         <ScrollArea className="flex-1 w-full pr-4">
           <div className="mt-4 space-y-4 w-full">
             <div className="min-h-screen flex items-center justify-center">
-              <div className="rounded-xl overflow-hidden max-w-lg w-full shadow-2xl">
+              <div className="rounded-xl overflow-hidden max-w-lg w-full">
                 <div className="relative">
                   <img
                     src={auction.productImg}
@@ -78,7 +79,7 @@ export function AuctionInfoSheet({
                     <span className="w-3 h-3 bg-[#FFE14F] rounded-full opacity-40" />
                   </div>
                 </div>
-                <div className="p-6">
+                <div className="">
                   <div className="flex items-center gap-2 mb-4">
                     <span className="bg-[#FFE14F] text-[#052024] font-bold px-2 py-1 rounded text-lg">
                       00
@@ -108,7 +109,7 @@ export function AuctionInfoSheet({
                     <h3 className="text-lg text-white font-semibold mb-2">
                       Top Bidders
                     </h3>
-                    <div className="divide-y divide-white/10 bg-[#052024] rounded">
+                    <div className="divide-y divide-white/10 bg-[#00191F]  rounded">
                       {auction.intestedBidders.map((b, i) => (
                         <div
                           key={b.id}

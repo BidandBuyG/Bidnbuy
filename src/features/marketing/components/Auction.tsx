@@ -122,7 +122,7 @@ export default function Auction() {
   }, []); // Run only on mount
 
   return (
-    <div className="mt-[5em]">
+    <div className="lg:mt-[5em]">
       <AuctionTable
         data={data}
         auctionColumns={AuctionColumn}

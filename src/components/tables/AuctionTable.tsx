@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { DataTable } from "./data-table";
 import { ListFilter } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableIcon from "../../assets/table-tab-icon.svg";
 import CardIcon from "../../assets/card-tab-icon.svg";
 import { TableErrorState } from "../referrals/ErrorTableData";
@@ -64,6 +64,16 @@ export const AuctionTable = ({
 }: Props) => {
   const [view, setView] = useState<"table" | "card">("table");
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) setView("card"); // lg breakpoint
+    };
+
+    handleResize(); // Run once at mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <section aria-labelledby="task-title" className="text-white">
@@ -121,7 +131,7 @@ export const AuctionTable = ({
                     onValueChange={(val) => setView(val as "table" | "card")}
                   >
                     <TabsList className="mt-3 bg-transparent gap-3">
-                      <TabsTrigger value="table">
+                      <TabsTrigger value="table" className="hidden lg:flex">
                         <div className="flex items-center gap-2">
                           <img
                             src={TableIcon}
@@ -162,7 +172,7 @@ export const AuctionTable = ({
                                   trigger={
                                     <button
                                       type="button"
-                                      className="bg-[#1894A2] text-white px-6 py-2 rounded-lg font-medium text-lg transition hover:bg-[#117484] focus:outline-none"
+                                      className="bg-[#1894A2] text-white px-6 py-2 rounded-lg font-medium text-lg transition hover:bg-[#117484] focus:outline-none cursor-pointer"
                                     >
                                       View More
                                     </button>

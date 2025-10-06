@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { DataTable } from "./data-table";
 import { ListFilter } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableIcon from "../../assets/table-tab-icon.svg";
 import CardIcon from "../../assets/card-tab-icon.svg";
 import ReferralCardData from "./ReferralCardData";
@@ -56,6 +56,16 @@ export const ReferralTable = ({
   onQueryChange,
 }: Props) => {
   const [view, setView] = useState<"table" | "card">("table");
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) setView("card"); // lg breakpoint
+    };
+
+    handleResize(); // Run once at mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
@@ -121,7 +131,7 @@ export const ReferralTable = ({
                     onValueChange={(val) => setView(val as "table" | "card")}
                   >
                     <TabsList className="mt-3 bg-transparent gap-3">
-                      <TabsTrigger value="table">
+                      <TabsTrigger value="table" className="hidden lg:flex">
                         <div className="flex items-center gap-2">
                           <img
                             src={TableIcon}
@@ -161,7 +171,7 @@ export const ReferralTable = ({
                                   referral={ref}
                                   trigger={
                                     <button
-                                      className="w-full py-5 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-600 transition"
+                                      className="w-full py-5 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-600 transition cursor-pointer"
                                       type="button"
                                     >
                                       View Info

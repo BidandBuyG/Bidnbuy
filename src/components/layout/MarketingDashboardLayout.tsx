@@ -14,7 +14,7 @@ export function MarketingDashboardLayout({ children }: DashboardLayoutProps) {
         Free shipping on all orders before 30th August
       </div>
       <TopNav />
-      <main className="flex-1 px-3 sm:px-6 md:px-8 pt-10 pb-10 w-full mx-auto max-w-[95%]">
+      <main className="flex-1 px-3 sm:px-6 md:px-8 pb-10 w-full mx-auto max-w-[95%]">
         {children}
       </main>
     </div>

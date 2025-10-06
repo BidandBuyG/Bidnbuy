@@ -118,7 +118,7 @@ export default function AddUser() {
   return (
     <MarketingDashboardLayout>
       <div className="bg-[#00191F] text-white">
-        <div className="mt-[5em]">
+        <div className="lg:mt-[5em]">
           <AddUserTable
             data={data}
             userColumns={AddUserColumn}

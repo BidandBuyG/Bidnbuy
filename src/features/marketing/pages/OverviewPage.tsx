@@ -10,7 +10,7 @@ export default function OverviewPage() {
       {/* Heading */}
       <Header firstText="Overview" greyText="Dashboard" />
       {/* Metric Cards */}
-      <div className="mb-8">
+      <div className="mb-[3em]">
         <MarketingStats />
       </div>
 

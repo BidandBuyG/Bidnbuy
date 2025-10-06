@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { DataTable } from "./data-table";
 import { Plus } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableIcon from "../../assets/table-tab-icon.svg";
 import CardIcon from "../../assets/card-tab-icon.svg";
 import { AddUserSheet } from "../referrals/AddUserSheet";
@@ -58,7 +58,15 @@ export const AddUserTable = ({
 }: Props) => {
   const [view, setView] = useState<"table" | "card">("table");
   const [openAddUser, setOpenAddUser] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) setView("card"); // lg breakpoint
+    };
 
+    handleResize(); // Run once at mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
       <section aria-labelledby="task-title" className="text-white">
@@ -117,7 +125,7 @@ export const AddUserTable = ({
                 totalPages={totalPages}
                 button={
                   <Button
-                    className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2"
+                    className="bg-[#007F93] hover:bg-[#1892a5] text-white flex items-center gap-2 cursor-pointer"
                     onClick={() => setOpenAddUser(true)}
                   >
                     <Plus />
@@ -130,7 +138,7 @@ export const AddUserTable = ({
                     onValueChange={(val) => setView(val as "table" | "card")}
                   >
                     <TabsList className="mt-3 bg-transparent gap-3">
-                      <TabsTrigger value="table">
+                      <TabsTrigger value="table" className="hidden lg:flex">
                         <div className="flex items-center gap-2">
                           <img
                             src={TableIcon}
@@ -170,7 +178,7 @@ export const AddUserTable = ({
                                   user={ref}
                                   trigger={
                                     <button
-                                      className="w-full py-5 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-600 transition"
+                                      className="w-full py-5 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-600 transition cursor-pointer"
                                       type="button"
                                     >
                                       View Info

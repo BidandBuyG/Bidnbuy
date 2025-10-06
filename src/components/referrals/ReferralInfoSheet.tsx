@@ -1,6 +1,7 @@
 import { ArrowLeft, Phone } from "lucide-react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -97,9 +98,9 @@ export function ReferralInfoSheet({
         <SheetHeader>
           <SheetTitle className="text-3xl">
             <div className="flex items-center gap-3 text-white justify-between w-[80%]">
-              <div>
+              <SheetClose className="cursor-pointer">
                 <ArrowLeft />
-              </div>
+              </SheetClose>
 
               <div>
                 Referral

@@ -122,11 +122,11 @@ export default function Referrals() {
       <div className="bg-[#00191F] text-white">
         <Header firstText="My" greyText="Referrals" />
         {/* Metric Cards */}
-        <div className="mb-8">
+        <div className="mb-[3em]">
           <MarketingStats />
         </div>
 
-        <div className="mt-[5em]">
+        <div className="lg:mt-[5em]">
           <ReferralTable
             data={data}
             referralColumns={ReferralColumn}

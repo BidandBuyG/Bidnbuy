@@ -15,13 +15,13 @@ export function BottomSectionLinks() {
       <div className="flex flex-col md:flex-row w-full justify-end ml-auto flex-1 gap-4">
         {/* Left column */}
         <div className="flex flex-col gap-6 w-full md:w-1/2 lg:w-2/5">
-          <HeaderLink label="Overview" />
-          <HeaderLink label="Add User" />
+          <HeaderLink label="Overview" href="/overview" />
+          <HeaderLink label="Add User" href="marketing/add-user" />
         </div>
         {/* Right column */}
         <div className="flex flex-col gap-6 w-full md:w-1/2 lg:w-2/5 mt-4 md:mt-0 md:ml-10">
-          <HeaderLink label="My Referrals" />
-          <HeaderLink label="My Wallet" />
+          <HeaderLink label="My Referrals" href="marketing/referrals" />
+          <HeaderLink label="My Wallet" href="#" />
         </div>
       </div>
     </div>

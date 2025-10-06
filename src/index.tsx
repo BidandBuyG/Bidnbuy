@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./app/App";
 import "./App.css";
 import { Toaster as SonnerToaster } from "sonner";
-import { HealthBadge } from "./components/HealthBadge";
+// import { HealthBadge } from "./components/HealthBadge";
 import TanstackProvider from "./components/providers/tanstack-provider";
 
 const root = ReactDOM.createRoot(
@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <TanstackProvider>
-      <HealthBadge />
+      {/* <HealthBadge /> */}
       <SonnerToaster />
       <App />
     </TanstackProvider>

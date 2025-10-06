@@ -95,36 +95,36 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="mx-auto mb-5">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="text-2xl md:text-[31px] font-semibold text-white">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* Left side (Header + Tabs) */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+            <div className="md:text-xl text-[31px] lg:text-[31px] font-semibold text-white">
               {header}
             </div>
             <div>{externalTabs}</div>
           </div>
 
-          <div className="flex justify-between gap-4">
-            <div className="ml-auto flex items-center gap-x-4">
-              <div className="relative">
-                <Search className="h-4 w-4 absolute top-3 left-3 text-white" />
-                <Input
-                  placeholder="Search"
-                  value={localQuery}
-                  onChange={(e) => setLocalQuery(e.target.value)}
-                  className="placeholder:text-white placeholder-opacity-100 max-w-lg w-lg pl-9 h-10 focus-visible:border-none border-[#002129] bg-[#002129] text-white"
-                />
-              </div>
-
-              {button}
+          {/* Right side (Search + Button) */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4 justify-between lg:justify-start">
+            <div className="relative w-full sm:w-auto">
+              <Search className="h-4 w-4 absolute top-3 left-3 text-white" />
+              <Input
+                placeholder="Search"
+                value={localQuery}
+                onChange={(e) => setLocalQuery(e.target.value)}
+                className="placeholder:text-white placeholder-opacity-100 w-full sm:w-[250px] md:w-[300px] pl-9 h-10 focus-visible:border-none border-[#002129] bg-[#002129] text-white"
+              />
             </div>
+
+            {button}
           </div>
         </div>
       </div>
 
       {hideTableBody ? (
-        <div>{customContent}</div>
+        <div className="">{customContent}</div>
       ) : (
-        <div>
+        <div className="hidden lg:block">
           <Table>
             <TableHeader className="border-t border-[#E8FFFD33]">
               {table.getHeaderGroups().map((headerGroup) => (
